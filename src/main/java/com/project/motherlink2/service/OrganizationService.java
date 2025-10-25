@@ -1,8 +1,10 @@
-package com.motherlink.service;
+package com.project.motherlink2.service;
 
-import com.motherlink.model.Organization;
+import com.project.motherlink2.model.Organization;
 import com.project.motherlink2.repository.OrganizationRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,17 +17,26 @@ public class OrganizationService {
     }
 
     public Organization saveOrganization(Organization organization) {
-        Optional<Organization> existing = organizationRepository
-                .findByOrganizationNameAndDistrictAndSectorAndCell(
-                        organization.getOrganizationName(),
-                        organization.getDistrict(),
-                        organization.getSector(),
-                        organization.getCell()
-                );
+//        Optional<Organization> existing = organizationRepository
+//                .findByOrganizationNameAndDistrictAndSectorAndCell(
+//                        organization.getOrganizationName(),
+//                        organization.getDistrict(),
+//                        organization.getSector(),
+//                        organization.getCell()
+//                );
+//
+//        if (existing.isPresent()) {
+//            return existing.get(); // Don’t create duplicate
+//        }
+        return (Organization) organizationRepository.save(organization);
+    }
 
-        if (existing.isPresent()) {
-            return existing.get(); // Don’t create duplicate
-        }
-        return organizationRepository.save(organization);
+    public List<Organization> getOrganizations() {
+        return organizationRepository.findAll();
+    }
+
+    public String getOrganizationById(Long organizationId) {
+        organizationRepository.findById(organizationId);
+        return "Organization created successfully ";
     }
 }

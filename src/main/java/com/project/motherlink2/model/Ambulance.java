@@ -1,4 +1,4 @@
-package com.motherlink.model;
+package com.project.motherlink2.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

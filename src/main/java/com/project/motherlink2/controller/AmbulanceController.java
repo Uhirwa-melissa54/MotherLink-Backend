@@ -1,27 +1,28 @@
-package com.motherlink.controller;
+package com.project.motherlink2.controller;
 
-import com.motherlink.model.Admin;
-import com.motherlink.service.AdminService;
+import com.project.motherlink2.model.Ambulance;
+import com.project.motherlink2.model.Organization;
+import com.project.motherlink2.service.AmbulanceService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/admins")
+@RequestMapping("/api/ambulances")
 @CrossOrigin(origins = "*")
-public class AdminController {
-    private final AdminService adminService;
+public class AmbulanceController {
+    private final AmbulanceService ambulanceService;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
+    public AmbulanceController(AmbulanceService ambulanceService) {
+        this.ambulanceService = ambulanceService;
     }
 
+    @GetMapping
+    public List<Ambulance> getAmbulances    () {
+        return ambulanceService.getAmbulances();
+    }
     @PostMapping("/create")
-    public Admin createAdmin(@RequestBody Admin admin) {
-        return adminService.saveAdmin(admin);
+    public Ambulance createAmbulance(@RequestBody Ambulance ambulance) {
+        return ambulanceService.saveAmbulance(ambulance);
     }
 }

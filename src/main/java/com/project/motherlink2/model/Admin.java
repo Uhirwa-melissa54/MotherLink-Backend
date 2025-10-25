@@ -1,7 +1,9 @@
-package com.motherlink.model;
+package com.project.motherlink2.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.project.motherlink2.model.Organization;
+
 
 @Data
 @Entity
@@ -20,4 +22,11 @@ public class Admin {
     @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
+    public Admin(String fullName, String email, Object o, String position, Object o1, Organization organization) {
+
+    }
+
+    public Admin() {
+
+    }
 }

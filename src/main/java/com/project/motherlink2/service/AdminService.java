@@ -1,8 +1,10 @@
-package com.motherlink.service;
+package com.project.motherlink2.service;
 
-import com.motherlink.model.Admin;
-import com.motherlink.repository.AdminRepository;
+import com.project.motherlink2.model.Admin;
+import com.project.motherlink2.repository.AdminRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -14,5 +16,9 @@ public class AdminService {
 
     public Admin saveAdmin(Admin admin) {
         return adminRepository.save(admin);
+    }
+
+    public Optional<Admin> login(String email, String password, String reqPassword) {
+        return adminRepository.findByEmailAndPassword(email, password);
     }
 }

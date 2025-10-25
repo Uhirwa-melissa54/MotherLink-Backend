@@ -1,4 +1,4 @@
-package com.motherlink.model;
+package com.project.motherlink2.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,11 +11,11 @@ public class Organization {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String organizationName;
+    private String name;
     private String district;
     private String sector;
     private String cell;
-    private String physicalAddress;
-    private String facility;
-    private String licenseNumber;
+    private String physical_address;
+    private String type_of_facility;
+    private String license_number;
 }

@@ -1,8 +1,10 @@
-package com.motherlink.service;
+package com.project.motherlink2.service;
 
-import com.motherlink.model.Ambulance;
+import com.project.motherlink2.model.Ambulance;
 import com.project.motherlink2.repository.AmbulanceRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AmbulanceService {
@@ -14,5 +16,9 @@ public class AmbulanceService {
 
     public Ambulance saveAmbulance(Ambulance ambulance) {
         return ambulanceRepository.save(ambulance);
+    }
+
+    public List<Ambulance> getAmbulances() {
+        return  ambulanceRepository.findAll();
     }
 }
