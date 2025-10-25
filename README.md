@@ -1,4 +1,4 @@
-#= MotherLink Registration System
+# MotherLink Registration System
 
 MotherLink Registration System is a backend application designed to support the registration and management of organizations, administrators, ambulances, and community health workers within a healthcare network. The system ensures secure access, structured data storage, and efficient communication between health service providers.
 
