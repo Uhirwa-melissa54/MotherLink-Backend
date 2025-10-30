@@ -3,23 +3,33 @@ package com.project.motherlink2.controller;
 import com.project.motherlink2.Dtos.LoginDto;
 import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.model.Admin;
+import com.project.motherlink2.repository.AdminRepository;
 import com.project.motherlink2.service.AdminService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/admins")
 @CrossOrigin(origins = "*")
 public class AdminController {
     private final AdminService adminService;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
-    }
+
 
     @PostMapping("/create")
-    public Admin createAdmin(@RequestBody Admin admin) {
-        return adminService.saveAdmin(admin);
+    public ResponseEntity createAdmin(@RequestBody Admin admin) {
+        if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getId()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        Admin savedAdmin = adminService.save(admin);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Admin created successfully");
+
+
+
     }
 
     @PostMapping("/login")
