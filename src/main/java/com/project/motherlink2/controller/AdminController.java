@@ -21,7 +21,7 @@ public class AdminController {
 
     @PostMapping("/create")
     public ResponseEntity createAdmin(@RequestBody Admin admin) {
-        if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getId()).isPresent()) {
+        if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getOrganization().getId()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         Admin savedAdmin = adminService.save(admin);

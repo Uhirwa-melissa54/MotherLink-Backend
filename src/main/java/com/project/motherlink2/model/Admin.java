@@ -19,7 +19,7 @@ public class Admin {
     private String position;
     private String password;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
 

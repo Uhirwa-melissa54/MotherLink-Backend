@@ -13,8 +13,8 @@ import java.util.Optional;
 public class AdminService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
-    public Optional<Admin> exists(String fullName,String email, Long idcd ) {
-        return adminRepository.findByFullNameAndEmailAndOrganizationdId(fullName,email,id);
+    public Optional<Admin> exists(String fullName,String email, Long organizationId) {
+        return adminRepository.findByFullNameAndEmailAndOrganization_Id(fullName,email,organizationId);
     }
 
     public Optional<Admin> login(String email, String password, String reqPassword) {
