@@ -5,8 +5,9 @@ import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.config.JwtUtil;
-import com.project.motherlink2.repository.AdminRepository;
+import com.project.motherlink2.service.CHWService;
 import com.project.motherlink2.service.AdminService;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class AdminController {
     private final AdminService adminService;
     private final JwtUtil jwtUtil;
+
+    private final CHWService chwService;
 
 
     @PostMapping("/create")
@@ -72,6 +75,22 @@ public class AdminController {
         cookie.setPath("/api/token"); // endpoint for refresh
         cookie.setMaxAge(24 * 60 * 60); // 1 day
         response.addCookie(cookie);
+    }
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<?> deactivateCHW(@PathVariable Long id) {
+        boolean success = chwService.deactivateCHW(id);
+        if (success) {
+            return ResponseEntity.ok("CHW deactivated successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
+    }
+
+    public ResponseEntity<?> activateCHW(@PathVariable Long id) {
+        boolean success = chwService.activateCHW(id);
+        if (success) {
+            return ResponseEntity.ok("CHW activated successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
 
 

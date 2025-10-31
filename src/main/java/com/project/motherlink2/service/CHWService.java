@@ -36,12 +36,24 @@ public class CHWService {
         return chwRepository.count();
     }
 
-    public boolean deactivateAdmin(Long id) {
-        Optional<CHW> optionalCHW = CHWRepository.findById(id);
-        if (optionalAdmin.isPresent()) {
-            Admin admin = optionalAdmin.get();
-            admin.setActive(false); // ❌ deactivate
-            adminRepository.save(admin);
+
+    public boolean deactivateCHW(Long id) {
+        Optional<CHW> chwOptional = chwRepository.findById(id);
+        if (chwOptional.isPresent()) {
+            CHW chw = chwOptional.get();
+            chw.setStatus(false); // 🔴 deactivate
+            chwRepository.save(chw);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean activateCHW(Long id) {
+        Optional<CHW> chwOptional = chwRepository.findById(id);
+        if (chwOptional.isPresent()) {
+            CHW chw = chwOptional.get();
+            chw.setStatus(true); // 🟢 activate
+            chwRepository.save(chw);
             return true;
         }
         return false;
