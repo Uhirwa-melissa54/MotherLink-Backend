@@ -21,7 +21,7 @@ public class JwtUtil {
     }
 
     // Generate Access Token
-    public String generateAccessToken(String username) {
+    public  String generateAccessToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())

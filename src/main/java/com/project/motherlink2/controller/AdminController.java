@@ -3,8 +3,11 @@ package com.project.motherlink2.controller;
 import com.project.motherlink2.Dtos.LoginDto;
 import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.model.Admin;
+import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.repository.AdminRepository;
 import com.project.motherlink2.service.AdminService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class AdminController {
     private final AdminService adminService;
-
+    private final JwtUtil jwtUtil;
 
 
     @PostMapping("/create")
@@ -35,7 +38,7 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity login(@RequestBody LoginDto loginDto,HttpServletResponse response) {
         if (loginDto == null) {
             return ResponseEntity.status(400)
                     .body(new LoginResponseDto(false, "Login request cannot be null", null));
@@ -45,10 +48,22 @@ public class AdminController {
         Optional<Admin> admin = adminService.login(email, password);
 
         if (admin.isPresent()) {
-            return ResponseEntity.status(200).body("Logged in successfully");
+            String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail());
+            addRefreshTokenToCookie(response, refreshToken);
+            return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken));
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
 
     }
+    private void addRefreshTokenToCookie(HttpServletResponse response, String refreshToken) {
+        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true); // true if using HTTPS
+        cookie.setPath("/api/token"); // endpoint for refresh
+        cookie.setMaxAge(24 * 60 * 60); // 1 day
+        response.addCookie(cookie);
+    }
+
 }

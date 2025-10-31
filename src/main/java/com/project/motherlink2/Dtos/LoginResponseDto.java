@@ -5,11 +5,12 @@ import com.project.motherlink2.model.Admin;
 public class LoginResponseDto {
     private boolean success;
     private String message;
-    private Admin Admin;
+    private String  accessToken;
 
-    public  LoginResponseDto(boolean success, String message, Admin Admin) {
+
+    public  LoginResponseDto(boolean success, String message, String accessToken) {
         this.success = success;
         this.message = message;
-        this.Admin = Admin;
+        this.accessToken = accessToken;
     }
 }
