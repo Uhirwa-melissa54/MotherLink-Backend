@@ -17,7 +17,7 @@ public class Ambulance {
     private String phoneNumber;
     private String emergencyPhoneNumber;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
 }

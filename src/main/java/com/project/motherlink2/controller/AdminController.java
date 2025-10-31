@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/admins")
@@ -33,33 +35,20 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto) {
-        // Validate and process LoginDto directly
+    public ResponseEntity login(@RequestBody LoginDto loginDto) {
         if (loginDto == null) {
             return ResponseEntity.status(400)
                     .body(new LoginResponseDto(false, "Login request cannot be null", null));
         }
         String email = loginDto.getEmail() != null ? loginDto.getEmail().trim() : null;
         String password = loginDto.getPassword() != null ? loginDto.getPassword().trim() : null;
-        String role = loginDto.getPosition() != null ? loginDto.getPosition().trim().toUpperCase() : null;
+        Optional<Admin> admin = adminService.login(email, password);
 
-        if (email == null || email.isEmpty()) {
-            return ResponseEntity.status(400)
-                    .body(new LoginResponseDto(false, "Email cannot be empty", null));
-        }
-        if (password == null || password.isEmpty()) {
-            return ResponseEntity.status(400)
-                    .body(new LoginResponseDto(false, "Password cannot be empty", null));
-        }
-        if (role == null || role.isEmpty()) {
-            return ResponseEntity.status(400)
-                    .body(new LoginResponseDto(false, "Role cannot be empty", null));
+        if (admin.isPresent()) {
+            return ResponseEntity.status(200).body("Logged in successfully");
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
         }
 
-        // Call the service to authenticate
-        return adminService.login(email, role, password)
-                .map(admin -> ResponseEntity.ok(new LoginResponseDto(true, "Login successful", admin)))
-                .orElseGet(() -> ResponseEntity.status(401)
-                        .body(new LoginResponseDto(false, "Invalid email, role, or password", null)));
     }
 }

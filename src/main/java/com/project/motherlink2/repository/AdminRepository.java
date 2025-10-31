@@ -8,5 +8,5 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     Optional<Admin> findByFullNameAndEmailAndOrganization_Id(String fullName, String email, Long organizationId);
 
 
-    Optional<Admin> findByEmailAndPassword(String email, String password);
+    Optional<Admin> findByEmail(String email);
 }

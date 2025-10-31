@@ -17,8 +17,15 @@ public class AdminService {
         return adminRepository.findByFullNameAndEmailAndOrganization_Id(fullName,email,organizationId);
     }
 
-    public Optional<Admin> login(String email, String password, String reqPassword) {
-        return adminRepository.findByEmailAndPassword(email, password);
+    public Optional<Admin> login(String email, String rawPassword) {
+        Optional<Admin> adminOptional = adminRepository.findByEmail(email);
+        if (adminOptional.isPresent()) {
+            Admin admin = adminOptional.get();
+            if (passwordEncoder.matches(rawPassword, admin.getPassword())) {
+                return Optional.of(admin);
+            }
+        }
+        return Optional.empty();
     }
     public Admin save(Admin admin) {
         String hashedPassword = passwordEncoder.encode(admin.getPassword());
