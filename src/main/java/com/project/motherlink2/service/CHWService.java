@@ -36,4 +36,14 @@ public class CHWService {
         return chwRepository.count();
     }
 
+    public boolean deactivateAdmin(Long id) {
+        Optional<CHW> optionalCHW = CHWRepository.findById(id);
+        if (optionalAdmin.isPresent()) {
+            Admin admin = optionalAdmin.get();
+            admin.setActive(false); // ❌ deactivate
+            adminRepository.save(admin);
+            return true;
+        }
+        return false;
+    }
 }

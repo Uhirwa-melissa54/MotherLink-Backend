@@ -1,12 +1,17 @@
 package com.project.motherlink2.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name = "health_workers")
+@AllArgsConstructor
+@NoArgsConstructor
 public class CHW {
 
     @Id
@@ -38,24 +43,9 @@ public class CHW {
     private LocalDate dateJoined;
 
     @Column(name="status",nullable = false)
-    private String status;
+    private boolean status;
 
-    // Default constructor
-    public CHW() {}
 
-    // Optional constructor for convenience
-    public CHW(String chwId, String fullName, String gender, String email,
-                        String nationalId, String cell, String village,
-                        String phoneNumber, LocalDate dateJoined,String status) {
-        this.chwId = chwId;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.email = email;
-        this.nationalId = nationalId;
-        this.cell = cell;
-        this.village = village;
-        this.phoneNumber = phoneNumber;
-        this.dateJoined = dateJoined;
-        this.status = status;
-    }
+
+
 }
