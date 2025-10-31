@@ -2,6 +2,7 @@ package com.project.motherlink2.controller;
 
 import com.project.motherlink2.Dtos.LoginDto;
 import com.project.motherlink2.Dtos.LoginResponseDto;
+import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.repository.AdminRepository;
@@ -25,13 +26,20 @@ public class AdminController {
 
 
     @PostMapping("/create")
-    public ResponseEntity createAdmin(@RequestBody Admin admin) {
+    public ResponseEntity createAdmin(@RequestBody Admin admin, HttpServletResponse response) {
         if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getOrganization().getId()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         Admin savedAdmin = adminService.save(admin);
+        if(savedAdmin!=null) {
+            String accessToken = jwtUtil.generateAccessToken(savedAdmin.getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail());
+            addRefreshTokenToCookie(response, refreshToken);
+            return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
+        }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Admin created successfully");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new RegisterResponseDto(false, "Registration failed", null));
 
 
 
