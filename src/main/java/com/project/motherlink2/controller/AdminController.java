@@ -84,6 +84,29 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
+    @PostMapping("/token/refresh")
+    public ResponseEntity<?> refreshAccessToken(@CookieValue(value = "refreshToken", required = false) String refreshToken) {
+        if (refreshToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Refresh token is missing");
+        }
+
+        // Validate refresh token
+        if (!jwtUtil.validateToken(refreshToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Invalid or expired refresh token");
+        }
+
+        // Extract username from refresh token
+        String email = jwtUtil.getUsername(refreshToken);
+
+        // Generate a new access token
+        String newAccessToken = jwtUtil.generateAccessToken(email);
+
+        // Return it to the client
+        return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken));
+    }
+
 
     public ResponseEntity<?> activateCHW(@PathVariable Long id) {
         boolean success = chwService.activateCHW(id);
