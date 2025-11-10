@@ -5,6 +5,7 @@ import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.config.JwtUtil;
+import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.service.CHWService;
 import com.project.motherlink2.service.AdminService;
 
@@ -84,6 +85,15 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
+    @PutMapping("/update/chw")
+    public ResponseEntity<?> updateCHW(@PathVariable Long id, CHW updatedCHW) {
+        boolean success = chwService.updateCHW(id,updatedCHW);
+        if (success) {
+            return ResponseEntity.ok("CHW updated successfully");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
+    }
+
     @PostMapping("/token/refresh")
     public ResponseEntity<?> refreshAccessToken(@CookieValue(value = "refreshToken", required = false) String refreshToken) {
         if (refreshToken == null) {
