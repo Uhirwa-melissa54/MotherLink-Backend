@@ -43,7 +43,7 @@ public class CHW {
     private LocalDate dateJoined;
 
     @Column(name="status",nullable = false)
-    private boolean status;
+    private String status;
 
 
 

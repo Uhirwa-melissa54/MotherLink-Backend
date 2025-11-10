@@ -41,7 +41,7 @@ public class CHWService {
         Optional<CHW> chwOptional = chwRepository.findById(id);
         if (chwOptional.isPresent()) {
             CHW chw = chwOptional.get();
-            chw.setStatus(false);
+            chw.setStatus("inactive");
             chwRepository.save(chw);
             return true;
         }
@@ -63,7 +63,7 @@ public class CHWService {
             existingCHW.setVillage(updatedCHW.getVillage());
             existingCHW.setPhoneNumber(updatedCHW.getPhoneNumber());
             existingCHW.setDateJoined(updatedCHW.getDateJoined());
-            existingCHW.setStatus(updatedCHW.isStatus());
+            existingCHW.setStatus(updatedCHW.getStatus());
 
             chwRepository.save(existingCHW);
             return true;
@@ -79,7 +79,7 @@ public class CHWService {
         Optional<CHW> chwOptional = chwRepository.findById(id);
         if (chwOptional.isPresent()) {
             CHW chw = chwOptional.get();
-            chw.setStatus(true); // 🟢 activate
+            chw.setStatus("active"); // 🟢 activate
             chwRepository.save(chw);
             return true;
         }
