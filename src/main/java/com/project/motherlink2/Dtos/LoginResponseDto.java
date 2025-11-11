@@ -1,6 +1,13 @@
 package com.project.motherlink2.Dtos;
 
 import com.project.motherlink2.model.Admin;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class LoginResponseDto {
     private boolean success;
@@ -8,9 +15,4 @@ public class LoginResponseDto {
     private String  accessToken;
 
 
-    public  LoginResponseDto(boolean success, String message, String accessToken) {
-        this.success = success;
-        this.message = message;
-        this.accessToken = accessToken;
-    }
 }
