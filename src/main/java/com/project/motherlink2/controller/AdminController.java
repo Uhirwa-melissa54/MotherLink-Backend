@@ -30,7 +30,7 @@ public class AdminController {
 
 
     @PostMapping("/create")
-    public ResponseEntity createAdmin(@RequestBody Admin admin, HttpServletResponse response) {
+    public ResponseEntity<RegisterResponseDto> createAdmin(@RequestBody Admin admin, HttpServletResponse response) {
         if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getOrganization().getId()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
