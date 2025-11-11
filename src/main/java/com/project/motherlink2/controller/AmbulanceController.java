@@ -17,12 +17,12 @@ public class AmbulanceController {
         this.ambulanceService = ambulanceService;
     }
 
-    @GetMapping
-    public List<Ambulance> getAmbulances    () {
-        return ambulanceService.getAmbulances();
-    }
+    @GetMapping("/totalAmbulance")
+
     @PostMapping("/create")
     public Ambulance createAmbulance(@RequestBody Ambulance ambulance) {
         return ambulanceService.saveAmbulance(ambulance);
     }
+
+
 }
