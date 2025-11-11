@@ -12,17 +12,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @AllArgsConstructor
 public class SecurityConfig {
 
-    private final Auth authMiddleware; // inject your JWT middleware
+    private final Auth authMiddleware;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // disable CSRF for APIs
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admins/create", "/api/admins/login").permitAll() // public endpoints
-                        .anyRequest().authenticated() // all other endpoints require authentication
+                        .requestMatchers("/api/admins/create", "/api/admins/login").permitAll()
+                        .anyRequest().authenticated()
                 )
-                .addFilterBefore(authMiddleware, UsernamePasswordAuthenticationFilter.class); // run middleware before default filter
+                .addFilterBefore(authMiddleware, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
