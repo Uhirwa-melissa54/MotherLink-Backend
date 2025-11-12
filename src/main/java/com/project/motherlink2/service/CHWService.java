@@ -79,7 +79,7 @@ public class CHWService {
         Optional<CHW> chwOptional = chwRepository.findById(id);
         if (chwOptional.isPresent()) {
             CHW chw = chwOptional.get();
-            chw.setStatus("active"); // 🟢 activate
+            chw.setStatus("active");
             chwRepository.save(chw);
             return true;
         }
