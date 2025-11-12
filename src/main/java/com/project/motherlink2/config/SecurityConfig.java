@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admins/create", "/api/admins/login").permitAll()
+                        .requestMatchers("/api/admins/create", "/api/admins/login","/mobile/healthworkers/register","/mobile/healthworkers/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(authMiddleware, UsernamePasswordAuthenticationFilter.class);

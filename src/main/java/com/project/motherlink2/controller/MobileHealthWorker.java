@@ -53,11 +53,11 @@ public class MobileHealthWorker {
         }
         String email = loginDto.getEmail() != null ? loginDto.getEmail().trim() : null;
         String password = loginDto.getPassword() != null ? loginDto.getPassword().trim() : null;
-        Optional<Admin> admin = adminService.login(email, password);
+        Optional<CHW> chwOptional = chwService.login(email, password);
 
-        if (admin.isPresent()) {
-            String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail());
+        if (chwOptional.isPresent()) {
+            String accessToken = jwtUtil.generateAccessToken(chwOptional.get().getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(chwOptional.get().getEmail());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken));
         } else {

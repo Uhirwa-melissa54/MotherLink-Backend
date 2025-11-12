@@ -1,5 +1,6 @@
 package com.project.motherlink2.service;
 
+import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.repository.CHWRepository;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,16 @@ public class CHWService {
 
         return chwRepository.save(chw);
     }
-
+    public Optional<CHW> login(String email, String rawPassword) {
+        Optional<CHW> CHWOptional = chwRepository.findByEmail(email);
+        if (CHWOptional.isPresent()) {
+            CHW chw = CHWOptional.get();
+            if (passwordEncoder.matches(rawPassword, chw.getPassword())) {
+                return Optional.of(chw);
+            }
+        }
+        return Optional.empty();
+    }
 
     public List<CHW> getAllCHWs() {
         return chwRepository.findAll();
