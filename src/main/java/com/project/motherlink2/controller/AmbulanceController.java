@@ -26,6 +26,21 @@ public class AmbulanceController {
                 .status(HttpStatus.OK)
                 .body(new AmbulanceDto(totalAmbulance)); // <- use 'new' to create DTO
     }
+    @GetMapping("/availableAmbulance")
+    public ResponseEntity<?> getAvailableAmbulance() {
+        long totalAmbulance = ambulanceService.getAvailable();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new AmbulanceDto(totalAmbulance)); // <- use 'new' to create DTO
+    }
+    @GetMapping("/busyAmbulance")
+    public ResponseEntity<?> getBusyAmbulance() {
+        long totalAmbulance = ambulanceService.getIsNotAvailable();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new AmbulanceDto(totalAmbulance)); // <- use 'new' to create DTO
+    }
+
 
     @PostMapping("/create")
     public Ambulance createAmbulance(@RequestBody Ambulance ambulance) {

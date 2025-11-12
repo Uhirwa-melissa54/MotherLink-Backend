@@ -28,3 +28,12 @@ public class AmbulanceService {
         return count;
 
 }
+    public long getIsNotAvailable() {
+
+        List<Ambulance> availableAmbulances = ambulanceRepository.findByIsAvailableFalse();
+        long count = availableAmbulances.size();
+        return count;
+
+    }
+
+}

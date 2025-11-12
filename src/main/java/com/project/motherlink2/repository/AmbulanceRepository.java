@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface AmbulanceRepository extends JpaRepository<Ambulance, Long> {
     List<Ambulance> findByIsAvailableTrue();
-    long countByIsAvailableTrue();
+
+    List<Ambulance> findByIsAvailableFalse();
+
 }
