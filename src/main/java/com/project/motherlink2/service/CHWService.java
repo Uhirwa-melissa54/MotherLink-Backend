@@ -91,4 +91,10 @@ public class CHWService {
         long numberOfActiveCHWs = activeCHWs.size();
         return numberOfActiveCHWs;
     }
+
+    public long getInActiveCHWCount() {
+        List<CHW> activeCHWs = chwRepository.findByStatus("inactive");
+        long numberOfActiveCHWs = activeCHWs.size();
+        return numberOfActiveCHWs;
+    }
 }

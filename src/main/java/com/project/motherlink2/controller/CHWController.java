@@ -65,6 +65,12 @@ public class CHWController {
         Long count = chwService.getActiveCHWCount();
         return ResponseEntity.status(HttpStatus.OK).body(new AmbulanceDto(count));
     }
+    @GetMapping("/inactiveCHW")
+    public ResponseEntity<AmbulanceDto> getInaActiveCHWs() {
+        Long count = chwService.getInActiveCHWCount();
+        return ResponseEntity.status(HttpStatus.OK).body(new AmbulanceDto(count));
+    }
+
 
 
 
