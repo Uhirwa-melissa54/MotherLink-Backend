@@ -1,7 +1,10 @@
 package com.project.motherlink2.controller;
 
+import com.project.motherlink2.Dtos.AmbulanceDto;
+import com.project.motherlink2.Dtos.CHWDto;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.service.CHWService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +38,24 @@ public class CHWController {
                 .<ResponseEntity<Object>>map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(404).body("Health worker not found"));
     }
+    @GetMapping("/allCHW")
+    public ResponseEntity<?> getAllCHW() {
+        List<CHW> chwList = chwService.getAllCHWs();
 
+        List<CHWDto> chwDtos = chwList.stream()
+                .map(chw -> new CHWDto(
+                        chw.getFullName(),
+                        chw.getGender(),
+                        chw.getPhoneNumber(),
+                        chw.getDateJoined(),
+                        chw.getVillage(),
+                        chw.getStatus()
+                ))
+                .toList();
+
+        return ResponseEntity.ok(chwDtos);
+
+    }
     @GetMapping("/totalCHW")
     public ResponseEntity<Long> getTotalCHWs() {
         Long count = chwService.getTotalCHWs();

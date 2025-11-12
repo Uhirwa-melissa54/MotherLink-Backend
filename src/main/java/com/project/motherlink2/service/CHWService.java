@@ -16,22 +16,22 @@ public class CHWService {
         this.chwRepository = chwRepository;
     }
 
-    // Save a new health worker
+
     public CHW saveCHW(CHW chw) {
         return chwRepository.save(chw);
     }
 
-    // Get all health workers
+
     public List<CHW> getAllCHWs() {
         return chwRepository.findAll();
     }
 
-    // Get a health worker by ID
+
     public Optional<CHW> getCHWById(Long id) {
         return chwRepository.findById(id);
     }
 
-    //Get the total number of healthWorkers
+
     public Long getTotalCHWs() {
         return chwRepository.count();
     }
