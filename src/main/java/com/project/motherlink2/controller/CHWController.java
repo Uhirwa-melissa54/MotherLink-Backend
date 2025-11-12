@@ -54,13 +54,18 @@ public class CHWController {
                 .toList();
 
         return ResponseEntity.ok(chwDtos);
-
     }
     @GetMapping("/totalCHW")
     public ResponseEntity<Long> getTotalCHWs() {
         Long count = chwService.getTotalCHWs();
         return ResponseEntity.ok(count);
     }
+    @GetMapping("/activeCHW")
+    public ResponseEntity<AmbulanceDto> getActiveCHWs() {
+        Long count = chwService.getActiveCHWCount();
+        return ResponseEntity.status(HttpStatus.OK).body(new AmbulanceDto(count));
+    }
+
 
 
 }

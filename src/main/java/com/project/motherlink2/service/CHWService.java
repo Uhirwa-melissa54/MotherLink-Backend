@@ -85,4 +85,10 @@ public class CHWService {
         }
         return false;
     }
+
+    public long getActiveCHWCount() {
+        List<CHW> activeCHWs = chwRepository.findByStatus("active");
+        long numberOfActiveCHWs = activeCHWs.size();
+        return numberOfActiveCHWs;
+    }
 }
