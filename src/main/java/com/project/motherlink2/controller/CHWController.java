@@ -22,9 +22,9 @@ public class CHWController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CHW> createCHW(@RequestBody CHW chw) {
+    public ResponseEntity<String> createCHW(@RequestBody CHW chw) {
         CHW savedCHW = chwService.saveCHW(chw);
-        return ResponseEntity.ok(savedCHW);
+        return ResponseEntity.ok("User created successfully");
     }
 
     @GetMapping
@@ -70,6 +70,7 @@ public class CHWController {
         Long count = chwService.getInActiveCHWCount();
         return ResponseEntity.status(HttpStatus.OK).body(new AmbulanceDto(count));
     }
+
 
 
 
