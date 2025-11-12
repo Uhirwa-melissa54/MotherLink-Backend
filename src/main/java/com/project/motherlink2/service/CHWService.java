@@ -2,22 +2,29 @@ package com.project.motherlink2.service;
 
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.repository.CHWRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
+
 public class CHWService {
 
     private final CHWRepository chwRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public CHWService(CHWRepository chwRepository) {
-        this.chwRepository = chwRepository;
-    }
+
 
 
     public CHW saveCHW(CHW chw) {
+        String hashedPassword = passwordEncoder.encode(chw.getPassword());
+        chw.setPassword(hashedPassword);
+
         return chwRepository.save(chw);
     }
 
