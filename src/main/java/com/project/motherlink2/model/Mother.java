@@ -37,6 +37,8 @@ public class Mother {
 
     private Integer pregnancyMonths;
 
+    private Integer pregnancyDays;
+
     private String trimester;
 
     private LocalDate deliveryDate;
