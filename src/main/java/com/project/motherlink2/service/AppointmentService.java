@@ -31,4 +31,7 @@ public class AppointmentService {
                 .anyMatch(a -> a.getMother().getId().equals(mother.getId())
                         && a.getAppointmentDate().equals(date));
     }
+    public List<Appointments> getUpcomingAppointments() {
+        return appointmentRepository.findByStatus("Upcoming");
+    }
 }
