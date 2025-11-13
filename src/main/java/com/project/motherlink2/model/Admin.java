@@ -20,7 +20,7 @@ public class Admin {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "organization_id")
+    @JoinColumn(name = "license_number")
     private Organization organization;
 
     public Admin() {

@@ -21,7 +21,7 @@ import java.util.Optional;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/admins")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5174")
 public class AdminController {
     private final AdminService adminService;
     private final JwtUtil jwtUtil;
@@ -31,7 +31,7 @@ public class AdminController {
 
     @PostMapping("/create")
     public ResponseEntity<RegisterResponseDto> createAdmin(@RequestBody Admin admin, HttpServletResponse response) {
-        if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getOrganization().getId()).isPresent()) {
+        if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getOrganization().getLicenseNumber()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         Admin savedAdmin = adminService.save(admin);
@@ -57,6 +57,8 @@ public class AdminController {
         Optional<Admin> admin = adminService.login(email, password);
 
         if (admin.isPresent()) {
+
+
             String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail());
             String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail());
             addRefreshTokenToCookie(response, refreshToken);

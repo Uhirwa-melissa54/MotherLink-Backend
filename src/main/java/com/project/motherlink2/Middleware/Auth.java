@@ -29,6 +29,7 @@ public class Auth extends OncePerRequestFilter {
                 || path.equals("/api/admins/create")
                 || path.equals("/mobile/healthworkers/register")
                 || path.equals("/mobile/healthworkers/login")
+                || path.equals("/api/organizations/create")
                 || path.equals("/api/token")
                 || path.startsWith("/swagger-ui")      // Swagger UI page
                 || path.startsWith("/v3/api-docs")     // OpenAPI JSON

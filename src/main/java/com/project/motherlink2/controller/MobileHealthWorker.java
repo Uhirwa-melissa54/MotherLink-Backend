@@ -12,16 +12,18 @@ import com.project.motherlink2.service.AppointmentService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/mobile/healthworkers")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5174")
 @AllArgsConstructor
 public class MobileHealthWorker {
     private final CHWService chwService;

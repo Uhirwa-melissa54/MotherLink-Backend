@@ -20,6 +20,6 @@ public class Ambulance {
     private String emergencyPhoneNumber;
 
     @OneToOne
-    @JoinColumn(name = "organization_id")
+    @JoinColumn(name = "license_number")
     private Organization organization;
 }

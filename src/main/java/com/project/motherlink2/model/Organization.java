@@ -7,9 +7,9 @@ import lombok.Data;
 @Entity
 @Table(name = "organizations")
 public class Organization {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String licenseNumber; // Now the primary key
 
     private String name;
     private String district;
@@ -17,5 +17,4 @@ public class Organization {
     private String cell;
     private String physical_address;
     private String type_of_facility;
-    private String license_number;
 }

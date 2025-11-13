@@ -4,7 +4,7 @@ import com.project.motherlink2.model.Organization;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
-public interface OrganizationRepository<organizations> extends JpaRepository<Organization, Integer> {
+public interface OrganizationRepository<organizations> extends JpaRepository<Organization, String> {
 //    Optional<Organization> findByOrganizationNameAndDistrictAndSectorAndCell(
 //            String organizationName, String district, String sector, String cell); 
 }
