@@ -2,26 +2,21 @@ package com.project.motherlink2.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Appointments {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "mother_id")
-    private Mother mother;
+    private String message;
 
-    private LocalDate appointmentDate;
-    private String status = "Normal";
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 
 }
