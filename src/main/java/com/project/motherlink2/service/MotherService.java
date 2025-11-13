@@ -21,6 +21,33 @@ public class MotherService {
         return motherRepository.count();
     }
 
+    public boolean updateMother(Long id, Mother request) {
+        Optional<Mother> motherOptional = motherRepository.findById(id);
+        if (motherOptional.isPresent()) {
+            Mother existingMother = motherOptional.get();
+
+            existingMother.setNames(request.getNames());
+            existingMother.setDob(request.getDob());
+            existingMother.setPhone(request.getPhone());
+            existingMother.setNationalId(request.getNationalId());
+            existingMother.setMaritalStatus(request.getMaritalStatus());
+            existingMother.setDistrict(request.getDistrict());
+            existingMother.setSector(request.getSector());
+            existingMother.setCell(request.getCell());
+            existingMother.setVillage(request.getVillage());
+            existingMother.setPregnancyMonths(request.getPregnancyMonths());
+            existingMother.setPregnancyDays(request.getPregnancyDays());
+            existingMother.setStatus(request.getStatus());
+            existingMother.setDeliveryDate(request.getDeliveryDate());
+            existingMother.setHealthCenter(request.getHealthCenter());
+            existingMother.setInsurance(request.getInsurance());
+
+            motherRepository.save(existingMother);
+            return true;
+        }
+        return false;
+    }
+
     public List<Mother> getAllMothers() {
         return motherRepository.findAll();
     }

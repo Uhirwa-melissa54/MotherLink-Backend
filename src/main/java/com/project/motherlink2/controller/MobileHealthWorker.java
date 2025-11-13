@@ -102,6 +102,15 @@ public class MobileHealthWorker {
 
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateMother(@PathVariable Long id, @RequestBody Mother request) {
+        boolean success = motherService.updateMother(id, request);
+        if (success) {
+            return ResponseEntity.ok("Mother updated successfully");
+        }
+        return ResponseEntity.status(404).body("Mother not found");
+    }
+
 
     @GetMapping("notifications/all")
     public ResponseEntity<?> getAllNotifications() {
