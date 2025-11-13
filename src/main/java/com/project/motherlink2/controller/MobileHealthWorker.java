@@ -4,7 +4,7 @@ import com.project.motherlink2.Dtos.LoginDto;
 import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.config.JwtUtil;
-import com.project.motherlink2.model.Admin;
+import com.project.motherlink2.service.NotificationService;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.model.Mother;
 import com.project.motherlink2.service.CHWService;
@@ -26,6 +26,7 @@ public class MobileHealthWorker {
     private final CHWService chwService;
     private final JwtUtil jwtUtil;
     private final MotherService motherService;
+    private final NotificationService notificationService;
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDto> createCHW(@RequestBody CHW chw, HttpServletResponse response) {
         CHW savedCHW = chwService.saveCHW(chw);
@@ -68,10 +69,21 @@ public class MobileHealthWorker {
         }
 
     }
-    @PostMapping("/create")
+    @PostMapping("/createMother")
     public ResponseEntity<String> createMother(@RequestBody Mother mother) {
         Mother savedMother = motherService.saveMother(mother);
         return ResponseEntity.ok("Mother created successfully");
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllMothers() {
+        return ResponseEntity.ok(motherService.getAllMothers());
+    }
+
+
+    @GetMapping("notifications/all")
+    public ResponseEntity<?> getAllNotifications() {
+        return ResponseEntity.ok(notificationService.getAllNotifications());
     }
 
 
