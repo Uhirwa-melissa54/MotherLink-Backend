@@ -1,5 +1,6 @@
 package com.project.motherlink2.controller;
 
+import com.project.motherlink2.Dtos.AmbulanceDto;
 import com.project.motherlink2.Dtos.LoginDto;
 import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.Dtos.RegisterResponseDto;
@@ -82,6 +83,12 @@ public class MobileHealthWorker {
     @GetMapping("/all")
     public ResponseEntity<?> getAllMothers() {
         return ResponseEntity.ok(motherService.getAllMothers());
+    }
+
+    @GetMapping("/totalMothers")
+    public ResponseEntity<AmbulanceDto> getTotalMothers() {
+        return ResponseEntity.ok(new AmbulanceDto(motherService.getTotalMothers()));
+
     }
 
 

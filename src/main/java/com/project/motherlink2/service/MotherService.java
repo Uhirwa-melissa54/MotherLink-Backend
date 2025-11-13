@@ -17,6 +17,9 @@ public class MotherService {
     public Mother saveMother(Mother mother) {
         return motherRepository.save(mother);
     }
+    public long getTotalMothers() {
+        return motherRepository.count();
+    }
 
     public List<Mother> getAllMothers() {
         return motherRepository.findAll();
