@@ -1,9 +1,6 @@
 package com.project.motherlink2.controller;
 
-import com.project.motherlink2.Dtos.AmbulanceDto;
-import com.project.motherlink2.Dtos.LoginDto;
-import com.project.motherlink2.Dtos.LoginResponseDto;
-import com.project.motherlink2.Dtos.RegisterResponseDto;
+import com.project.motherlink2.Dtos.*;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.Appointments;
 import com.project.motherlink2.service.NotificationService;
@@ -80,10 +77,24 @@ public class MobileHealthWorker {
         return ResponseEntity.ok("Mother created successfully");
     }
 
-    @GetMapping("/all")
+    @GetMapping("/allMothers")
     public ResponseEntity<?> getAllMothers() {
-        return ResponseEntity.ok(motherService.getAllMothers());
+        List<Mother> motherList = motherService.getAllMothers(); // returns List<Mother>
+
+        List<MotherDto> motherDtos = motherList.stream()
+                .map(mother -> new MotherDto(
+                        mother.getId(),
+                        mother.getNames(),       // maps to motherName in DTO
+                        Long.parseLong(mother.getNationalId()), // convert if needed
+                        mother.getCell(),
+                        mother.getInsurance(),
+                        mother.getStatus()
+                ))
+                .toList();
+
+        return ResponseEntity.ok(motherDtos);
     }
+
 
     @GetMapping("/totalMothers")
     public ResponseEntity<AmbulanceDto> getTotalMothers() {
