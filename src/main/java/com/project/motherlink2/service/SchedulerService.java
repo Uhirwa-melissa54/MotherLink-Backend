@@ -38,13 +38,13 @@ public class SchedulerService {
                 if (daysUntilMilestone == 7) {
                     boolean exists = appointmentService.existsByMotherAndDate(mother, LocalDate.now().plusDays(7));
                     if (!exists) {
-                        Appointment appointment = new Appointment();
+                        Appointments appointment = new Appointments();
                         appointment.setMother(mother);
                         appointment.setAppointmentDate(LocalDate.now().plusDays(7));
                         appointment.setStatus("Upcoming");
                         appointmentService.save(appointment);
 
-                        String message = "Appointment for mother " + mother.getName() +
+                        String message = "Appointment for mother " + mother.getNames() +
                                 " is upcoming in 7 days.";
                         notificationService.sendNotification(message);
                     }
