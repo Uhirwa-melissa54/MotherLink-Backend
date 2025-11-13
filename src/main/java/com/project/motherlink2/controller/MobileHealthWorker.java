@@ -6,7 +6,9 @@ import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.model.CHW;
+import com.project.motherlink2.model.Mother;
 import com.project.motherlink2.service.CHWService;
+import com.project.motherlink2.service.MotherService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class MobileHealthWorker {
     private final CHWService chwService;
     private final JwtUtil jwtUtil;
+    private final MotherService motherService;
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDto> createCHW(@RequestBody CHW chw, HttpServletResponse response) {
         CHW savedCHW = chwService.saveCHW(chw);
@@ -64,6 +67,11 @@ public class MobileHealthWorker {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
 
+    }
+    @PostMapping("/create")
+    public ResponseEntity<String> createMother(@RequestBody Mother mother) {
+        Mother savedMother = motherService.saveMother(mother);
+        return ResponseEntity.ok("Mother created successfully");
     }
 
 
