@@ -15,6 +15,7 @@ public class Ambulance {
     private String dispatchLink;
     private int numberOfAmbulances;
     private String phoneNumber;
+    @Column(nullable = true)
     private boolean isAvailable;
     private String emergencyPhoneNumber;
 
