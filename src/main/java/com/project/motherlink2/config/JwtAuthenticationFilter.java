@@ -1,4 +1,3 @@
-/*
 package com.project.motherlink2.config;
 
 import jakarta.servlet.FilterChain;
@@ -45,4 +44,3 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-*/

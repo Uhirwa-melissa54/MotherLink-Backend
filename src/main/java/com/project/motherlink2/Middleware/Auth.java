@@ -1,4 +1,3 @@
-/*
 package com.project.motherlink2.Middleware;
 
 import com.project.motherlink2.config.JwtUtil;
@@ -24,7 +23,13 @@ public class Auth extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        if (path.equals("/api/admins/login") || path.equals("/api/admins/create")) {
+
+        // Skip authentication for public endpoints
+        if (path.equals("/api/admins/login")
+                || path.equals("/api/admins/create")
+                || path.equals("/mobile/healthworkers/register")
+                || path.equals("/mobile/healthworkers/login")
+                || path.equals("/api/token")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -46,4 +51,3 @@ public class Auth extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-*/
