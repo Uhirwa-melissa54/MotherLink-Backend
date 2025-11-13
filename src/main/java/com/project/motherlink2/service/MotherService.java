@@ -48,6 +48,8 @@ public class MotherService {
         return false;
     }
 
+
+
     public List<Mother> getAllMothers() {
         return motherRepository.findAll();
     }
@@ -56,8 +58,12 @@ public class MotherService {
         return motherRepository.findById(id);
     }
 
-    public void deleteMother(Long id) {
-        motherRepository.deleteById(id);
+    public boolean deleteMother(Long id) {
+        if (motherRepository.existsById(id)) {
+            motherRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     public boolean existsById(Long id) {

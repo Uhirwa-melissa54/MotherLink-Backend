@@ -111,6 +111,15 @@ public class MobileHealthWorker {
         return ResponseEntity.status(404).body("Mother not found");
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteMother(@PathVariable Long id) {
+        boolean success = motherService.deleteMother(id);
+        if (success) {
+            return ResponseEntity.ok("Mother deleted successfully");
+        }
+        return ResponseEntity.status(404).body("Mother not found");
+    }
+
 
     @GetMapping("notifications/all")
     public ResponseEntity<?> getAllNotifications() {
