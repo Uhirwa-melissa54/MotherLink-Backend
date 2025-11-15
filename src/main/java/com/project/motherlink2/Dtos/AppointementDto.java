@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AppointementDto {
     private String status;
-    private String name;
     private String motherName;
 }

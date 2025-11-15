@@ -3,6 +3,7 @@ package com.project.motherlink2.controller;
 import com.project.motherlink2.Dtos.*;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.Appointments;
+import com.project.motherlink2.Dtos.AppointementDto;
 import com.project.motherlink2.service.NotificationService;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.model.Mother;
@@ -31,6 +32,7 @@ public class MobileHealthWorker {
     private final MotherService motherService;
     private final NotificationService notificationService;
     private final AppointmentService appointmentService;
+
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDto> createCHW(@RequestBody CHW chw, HttpServletResponse response) {
         CHW savedCHW = chwService.saveCHW(chw);
@@ -129,15 +131,13 @@ public class MobileHealthWorker {
     }
 
     @GetMapping("/appointments/upcoming")
-    public ResponseEntity<List<AppointmentDto>> getUpcomingAppointments() {
-        List<AppointmentDto> upcomingDtos = appointmentService.getUpcomingAppointments()
+    public ResponseEntity<List<AppointementDto>> getUpcomingAppointments() {
+        List<AppointementDto> upcomingDtos = appointmentService.getUpcomingAppointments()
                 .stream()
-                .map(appointment -> new AppointmentDto(
+                .map(appointment -> new AppointementDto(
                         appointment.getId(),
-                        appointment.getMotherName(),
-                        appointment.getDate(),
-                        appointment.getTime(),
-                        appointment.getStatus()
+                        appointment.getStatus(),
+
                 ))
                 .toList();
 
