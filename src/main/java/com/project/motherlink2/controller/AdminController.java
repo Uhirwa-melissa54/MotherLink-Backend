@@ -9,6 +9,7 @@ import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.service.CHWService;
 import com.project.motherlink2.service.AdminService;
 
+import com.project.motherlink2.service.NotificationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -23,10 +24,24 @@ import java.util.Optional;
 @RequestMapping("/api/admins")
 @CrossOrigin(origins = "http://localhost:5173")
 public class AdminController {
+    private final NotificationService notificationService;
     private final AdminService adminService;
     private final JwtUtil jwtUtil;
 
     private final CHWService chwService;
+    @PostMapping("/notifications/send")
+    public ResponseEntity<String> sendNotification(String message){
+        try{
+
+            notificationService.sendNotification(message);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Notification Sent");
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+        }
+    }
+
 
 
     @PostMapping("/create")
@@ -124,6 +139,9 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
+
+ 
+
 
 
 
