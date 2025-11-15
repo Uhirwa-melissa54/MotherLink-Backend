@@ -129,11 +129,20 @@ public class MobileHealthWorker {
     }
 
     @GetMapping("/appointments/upcoming")
-    public ResponseEntity<List<Appointments>> getUpcomingAppointments() {
-        List<Appointments> upcoming = appointmentService.getUpcomingAppointments();
-        return ResponseEntity.ok(upcoming);
-    }
+    public ResponseEntity<List<AppointmentDto>> getUpcomingAppointments() {
+        List<AppointmentDto> upcomingDtos = appointmentService.getUpcomingAppointments()
+                .stream()
+                .map(appointment -> new AppointmentDto(
+                        appointment.getId(),
+                        appointment.getMotherName(),
+                        appointment.getDate(),
+                        appointment.getTime(),
+                        appointment.getStatus()
+                ))
+                .toList();
 
+        return ResponseEntity.ok(upcomingDtos);
+    }
 
 
 }
