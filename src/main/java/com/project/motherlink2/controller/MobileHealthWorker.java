@@ -37,8 +37,8 @@ public class MobileHealthWorker {
     public ResponseEntity<RegisterResponseDto> createCHW(@RequestBody CHW chw, HttpServletResponse response) {
         CHW savedCHW = chwService.saveCHW(chw);
         if(savedCHW!=null){
-            String accessToken = jwtUtil.generateAccessToken(savedCHW.getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(savedCHW.getEmail(), savedCHW.getFullName());
+            String accessToken = jwtUtil.generateAccessToken(savedCHW.getEmail(), savedCHW.getCell(), savedCHW.getVillage());
+            String refreshToken = jwtUtil.generateRefreshToken(savedCHW.getEmail(), savedCHW.getFullName(), savedCHW.getCell(),  savedCHW.getVillage());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
 
@@ -66,8 +66,8 @@ public class MobileHealthWorker {
         Optional<CHW> chwOptional = chwService.login(email, password);
 
         if (chwOptional.isPresent()) {
-            String accessToken = jwtUtil.generateAccessToken(chwOptional.get().getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(chwOptional.get().getEmail(),chwOptional.get().getFullName());
+            String accessToken = jwtUtil.generateAccessToken(chwOptional.get().getEmail(),chwOptional.get().getCell(),chwOptional.get().getVillage());
+            String refreshToken = jwtUtil.generateRefreshToken(chwOptional.get().getEmail(),chwOptional.get().getFullName(),chwOptional.get().getCell(),  chwOptional.get().getVillage());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken,chwOptional.get().getFullName()));
         } else {
