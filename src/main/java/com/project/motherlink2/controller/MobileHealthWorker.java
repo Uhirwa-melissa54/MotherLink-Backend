@@ -38,7 +38,7 @@ public class MobileHealthWorker {
         CHW savedCHW = chwService.saveCHW(chw);
         if(savedCHW!=null){
             String accessToken = jwtUtil.generateAccessToken(savedCHW.getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(savedCHW.getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(savedCHW.getEmail(), savedCHW.getFullName());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
 
@@ -59,7 +59,7 @@ public class MobileHealthWorker {
     public ResponseEntity login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         if (loginDto == null) {
             return ResponseEntity.status(400)
-                    .body(new LoginResponseDto(false, "Login request cannot be null", null));
+                    .body(new LoginResponseDto(false, "Login request cannot be null", null,"No name"));
         }
         String email = loginDto.getEmail() != null ? loginDto.getEmail().trim() : null;
         String password = loginDto.getPassword() != null ? loginDto.getPassword().trim() : null;
@@ -67,9 +67,9 @@ public class MobileHealthWorker {
 
         if (chwOptional.isPresent()) {
             String accessToken = jwtUtil.generateAccessToken(chwOptional.get().getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(chwOptional.get().getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(chwOptional.get().getEmail(),chwOptional.get().getFullName());
             addRefreshTokenToCookie(response, refreshToken);
-            return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken));
+            return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken,chwOptional.get().getFullName()));
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
@@ -136,7 +136,7 @@ public class MobileHealthWorker {
                 .stream()
                 .map(appointment -> new AppointementDto(
                         appointment.getId(),
-                        appointment.getStatus(),
+                        appointment.getStatus()
 
                 ))
                 .toList();
