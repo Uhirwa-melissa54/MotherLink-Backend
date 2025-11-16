@@ -70,13 +70,17 @@ public class CHWController {
         return ResponseEntity.ok(count);
     }
     @GetMapping("/activeCHW")
-    public ResponseEntity<AmbulanceDto> getActiveCHWs() {
-        Long count = chwService.getActiveCHWCount();
+    public ResponseEntity<AmbulanceDto> getActiveCHWs(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        Long count = chwService.getActiveCHWCount(district,sector);
         return ResponseEntity.status(HttpStatus.OK).body(new AmbulanceDto(count));
     }
     @GetMapping("/inactiveCHW")
-    public ResponseEntity<AmbulanceDto> getInaActiveCHWs() {
-        Long count = chwService.getInActiveCHWCount();
+    public ResponseEntity<AmbulanceDto> getInaActiveCHWs(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        Long count = chwService.getInActiveCHWCount(district,sector);
         return ResponseEntity.status(HttpStatus.OK).body(new AmbulanceDto(count));
     }
 
