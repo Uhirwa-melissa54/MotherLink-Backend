@@ -51,7 +51,7 @@ public class AdminController {
         }
         Admin savedAdmin = adminService.save(admin);
         if(savedAdmin!=null) {
-            String accessToken = jwtUtil.generateAccessToken(savedAdmin.getEmail());
+            String accessToken = jwtUtil.generateAccessToken(savedAdmin.getEmail(),savedAdmin.getOrganization().getDistrict(),savedAdmin.getOrganization().getSector());
             String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail(), savedAdmin.getFullName());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
@@ -126,7 +126,7 @@ public class AdminController {
         String name = jwtUtil.getName(refreshToken);
 
         // Generate a new access token
-        String newAccessToken = jwtUtil.generateAccessToken(email);
+        String newAccessToken = jwtUtil.generateAccessToken(email,district,sector);
 
         // Return it to the client
         return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,name));
