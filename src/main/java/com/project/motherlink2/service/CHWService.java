@@ -105,14 +105,14 @@ public class CHWService {
         return false;
     }
 
-    public long getActiveCHWCount() {
-        List<CHW> activeCHWs = chwRepository.findByStatus("active");
+    public long getActiveCHWCount(String district, String sector) {
+        List<CHW> activeCHWs = chwRepository.findByStatusAndDistrictAndSector("active", district, sector);
         long numberOfActiveCHWs = activeCHWs.size();
         return numberOfActiveCHWs;
     }
 
-    public long getInActiveCHWCount() {
-        List<CHW> activeCHWs = chwRepository.findByStatus("inactive");
+    public long getInActiveCHWCount(String district, String sector) {
+        List<CHW> activeCHWs = chwRepository.findByStatusAndDistrictAndSector("inactive", district, sector);
         long numberOfActiveCHWs = activeCHWs.size();
         return numberOfActiveCHWs;
     }
