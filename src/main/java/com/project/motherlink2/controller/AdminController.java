@@ -121,14 +121,15 @@ public class AdminController {
                     .body("Invalid or expired refresh token");
         }
 
-        // Extract username from refresh token
+
         String email = jwtUtil.getUsername(refreshToken);
         String name = jwtUtil.getName(refreshToken);
+        String sector=jwtUtil.extractSector(refreshToken);
+        String district=jwtUtil.extractDistrict(refreshToken);
 
-        // Generate a new access token
+
         String newAccessToken = jwtUtil.generateAccessToken(email,district,sector);
-
-        // Return it to the client
+        
         return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,name));
     }
 

@@ -34,10 +34,12 @@ public class JwtUtil {
 
 
     // Generate Refresh Token
-    public String generateRefreshToken(String email, String name) {
+    public String generateRefreshToken(String email, String name,String district,String sector) {
         return Jwts.builder()
                 .setSubject(email)
-                .claim("name", name) // <-- add this line
+                .claim("name", name)
+                .claim("district", district)
+                .claim("sector", sector)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(SignatureAlgorithm.HS256, secret)
