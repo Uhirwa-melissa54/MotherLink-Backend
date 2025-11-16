@@ -4,13 +4,11 @@ import com.project.motherlink2.Dtos.*;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.Appointments;
 import com.project.motherlink2.Dtos.AppointementDto;
-import com.project.motherlink2.service.NotificationService;
+import com.project.motherlink2.service.*;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.model.Mother;
-import com.project.motherlink2.service.CHWService;
-import com.project.motherlink2.service.MotherService;
-import com.project.motherlink2.service.AppointmentService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +30,7 @@ public class MobileHealthWorker {
     private final MotherService motherService;
     private final NotificationService notificationService;
     private final AppointmentService appointmentService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDto> createCHW(@RequestBody CHW chw, HttpServletResponse response) {
@@ -101,7 +100,8 @@ public class MobileHealthWorker {
 
 
     @GetMapping("/totalMothers")
-    public ResponseEntity<AmbulanceDto> getTotalMothers() {
+    public ResponseEntity<AmbulanceDto> getTotalMothers(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
         return ResponseEntity.ok(new AmbulanceDto(motherService.getTotalMothers()));
 
     }

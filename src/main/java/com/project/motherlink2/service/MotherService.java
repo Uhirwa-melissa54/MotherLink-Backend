@@ -17,8 +17,8 @@ public class MotherService {
     public Mother saveMother(Mother mother) {
         return motherRepository.save(mother);
     }
-    public long getTotalMothers() {
-        return motherRepository.count();
+    public long getTotalMothers(String district, String sector) {
+        return motherRepository.countByDistrictAndSector(district, sector);
     }
 
     public boolean updateMother(Long id, Mother request) {
@@ -51,6 +51,7 @@ public class MotherService {
 
 
     public List<Mother> getAllMothers() {
+
         return motherRepository.findAll();
     }
 

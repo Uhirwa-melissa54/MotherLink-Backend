@@ -6,6 +6,7 @@ import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.CHW;
+import com.project.motherlink2.service.AuthService;
 import com.project.motherlink2.service.CHWService;
 import com.project.motherlink2.service.AdminService;
 
@@ -28,6 +29,7 @@ public class AdminController {
     private final AdminService adminService;
     private final JwtUtil jwtUtil;
 
+
     private final CHWService chwService;
     @PostMapping("/notifications/send")
     public ResponseEntity<String> sendNotification(String message){
@@ -46,6 +48,7 @@ public class AdminController {
 
     @PostMapping("/create")
     public ResponseEntity<RegisterResponseDto> createAdmin(@RequestBody Admin admin, HttpServletResponse response) {
+
         if (adminService.exists(admin.getFullName(), admin.getEmail(), admin.getOrganization().getLicenseNumber()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
