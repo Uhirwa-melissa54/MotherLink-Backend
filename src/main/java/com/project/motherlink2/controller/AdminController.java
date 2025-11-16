@@ -52,7 +52,7 @@ public class AdminController {
         Admin savedAdmin = adminService.save(admin);
         if(savedAdmin!=null) {
             String accessToken = jwtUtil.generateAccessToken(savedAdmin.getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail(), savedAdmin.getFullName());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
         }
@@ -75,7 +75,7 @@ public class AdminController {
 
 
             String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail(),admin.get().getFullName());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken,admin.get().getFullName()));
         } else {
@@ -123,12 +123,13 @@ public class AdminController {
 
         // Extract username from refresh token
         String email = jwtUtil.getUsername(refreshToken);
+        String name = jwtUtil.getName(refreshToken);
 
         // Generate a new access token
         String newAccessToken = jwtUtil.generateAccessToken(email);
 
         // Return it to the client
-        return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,));
+        return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,name));
     }
 
 
