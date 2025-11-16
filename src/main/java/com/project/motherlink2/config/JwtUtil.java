@@ -21,14 +21,17 @@ public class JwtUtil {
     }
 
     // Generate Access Token
-    public  String generateAccessToken(String username) {
+    public String generateAccessToken(String username, String district, String sector) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(username)                   // email or username
+                .claim("district", district)            // add district claim
+                .claim("sector", sector)                // add sector claim
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
+
 
     // Generate Refresh Token
     public String generateRefreshToken(String email, String name) {
@@ -65,6 +68,22 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.get("name", String.class);
+    }
+
+    public String extractDistrict(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("district", String.class);
+    }
+
+    public String extractSector(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("sector", String.class);
     }
 
 }
