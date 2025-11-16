@@ -135,8 +135,8 @@ public class MobileHealthWorker {
         List<AppointementDto> upcomingDtos = appointmentService.getUpcomingAppointments()
                 .stream()
                 .map(appointment -> new AppointementDto(
-                        appointment.getId(),
-                        appointment.getStatus()
+                        appointment.getStatus(),
+                        appointment.getMother().getNames()
 
                 ))
                 .toList();
