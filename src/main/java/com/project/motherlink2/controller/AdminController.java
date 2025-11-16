@@ -52,7 +52,7 @@ public class AdminController {
         Admin savedAdmin = adminService.save(admin);
         if(savedAdmin!=null) {
             String accessToken = jwtUtil.generateAccessToken(savedAdmin.getEmail(),savedAdmin.getOrganization().getDistrict(),savedAdmin.getOrganization().getSector());
-            String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail(), savedAdmin.getFullName());
+            String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail(), savedAdmin.getFullName(),savedAdmin.getOrganization().getDistrict(),savedAdmin.getOrganization().getSector());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
         }
@@ -74,8 +74,8 @@ public class AdminController {
         if (admin.isPresent()) {
 
 
-            String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail());
-            String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail(),admin.get().getFullName());
+            String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail(),admin.get().getOrganization().getDistrict(),admin.get().getOrganization().getSector());
+            String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail(),admin.get().getFullName(),admin.get().getOrganization().getDistrict(),admin.get().getOrganization().getSector());
             addRefreshTokenToCookie(response, refreshToken);
             return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken,admin.get().getFullName()));
         } else {
@@ -129,7 +129,7 @@ public class AdminController {
 
 
         String newAccessToken = jwtUtil.generateAccessToken(email,district,sector);
-        
+
         return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,name));
     }
 
