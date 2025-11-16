@@ -3,7 +3,9 @@ package com.project.motherlink2.controller;
 import com.project.motherlink2.Dtos.AmbulanceDto;
 import com.project.motherlink2.Dtos.CHWDto;
 import com.project.motherlink2.model.CHW;
+import com.project.motherlink2.service.AuthService;
 import com.project.motherlink2.service.CHWService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 public class CHWController {
 
     private final CHWService chwService;
+    private final AuthService authService;
 
     public CHWController(CHWService chwService) {
         this.chwService = chwService;
@@ -28,8 +31,10 @@ public class CHWController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CHW>> getAllCHWs() {
-        return ResponseEntity.ok(chwService.getAllCHWs());
+    public ResponseEntity<List<CHW>> getAllCHWs(HttpServletRequest request) {
+        String district = authService.getUserDistrict(request);
+        String sector = authService.getUserSector(request);
+        return ResponseEntity.ok(chwService.getAllCHWs(district, sector));
     }
 
     @GetMapping("/{id}")
@@ -39,7 +44,8 @@ public class CHWController {
                 .orElse(ResponseEntity.status(404).body("Health worker not found"));
     }
     @GetMapping("/allCHW")
-    public ResponseEntity<?> getAllCHW() {
+    public ResponseEntity<?> getAllCHW(HttpServletRequest request) {
+        String district=
         List<CHW> chwList = chwService.getAllCHWs();
 
         List<CHWDto> chwDtos = chwList.stream()

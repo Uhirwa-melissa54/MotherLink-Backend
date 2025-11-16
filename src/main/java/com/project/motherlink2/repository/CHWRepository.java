@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface CHWRepository extends JpaRepository<CHW, Long> {
     List<CHW> findByStatus(String status);
+    List<CHW> findByDistrictAndSector(String district, String sector);
     Optional<CHW> findByEmail(String email);
 
 }

@@ -39,8 +39,9 @@ public class CHWService {
         return Optional.empty();
     }
 
-    public List<CHW> getAllCHWs() {
-        return chwRepository.findAll();
+    public List<CHW> getAllCHWs(String district, String sector) {
+
+        return chwRepository.findByDistrictAndSector(district, sector);
     }
 
 
