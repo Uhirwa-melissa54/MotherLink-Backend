@@ -45,8 +45,9 @@ public class CHWController {
     }
     @GetMapping("/allCHW")
     public ResponseEntity<?> getAllCHW(HttpServletRequest request) {
-        String district=
-        List<CHW> chwList = chwService.getAllCHWs();
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        List<CHW> chwList = chwService.getAllCHWs(district, sector);
 
         List<CHWDto> chwDtos = chwList.stream()
                 .map(chw -> new CHWDto(
