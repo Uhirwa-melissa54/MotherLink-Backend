@@ -50,8 +50,9 @@ public class CHWService {
     }
 
 
-    public Long getTotalCHWs() {
-        return chwRepository.count();
+    public Long getTotalCHWs(String district, String sector) {
+
+        return chwRepository.countByDistrictAndSector(district, sector);
     }
 
 

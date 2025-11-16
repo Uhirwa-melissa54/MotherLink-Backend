@@ -63,8 +63,10 @@ public class CHWController {
         return ResponseEntity.ok(chwDtos);
     }
     @GetMapping("/totalCHW")
-    public ResponseEntity<Long> getTotalCHWs() {
-        Long count = chwService.getTotalCHWs();
+    public ResponseEntity<Long> getTotalCHWs(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        Long count = chwService.getTotalCHWs(district,sector);
         return ResponseEntity.ok(count);
     }
     @GetMapping("/activeCHW")
