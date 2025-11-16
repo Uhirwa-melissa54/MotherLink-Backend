@@ -65,7 +65,7 @@ public class AdminController {
     public ResponseEntity login(@RequestBody LoginDto loginDto,HttpServletResponse response) {
         if (loginDto == null) {
             return ResponseEntity.status(400)
-                    .body(new LoginResponseDto(false, "Login request cannot be null", null));
+                    .body(new LoginResponseDto(false, "Login request cannot be null", null,"No name"));
         }
         String email = loginDto.getEmail() != null ? loginDto.getEmail().trim() : null;
         String password = loginDto.getPassword() != null ? loginDto.getPassword().trim() : null;
@@ -77,7 +77,7 @@ public class AdminController {
             String accessToken = jwtUtil.generateAccessToken(admin.get().getEmail());
             String refreshToken = jwtUtil.generateRefreshToken(admin.get().getEmail());
             addRefreshTokenToCookie(response, refreshToken);
-            return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken));
+            return ResponseEntity.ok(new LoginResponseDto(true, "Login successful", accessToken,admin.get().getFullName()));
         } else {
             return ResponseEntity.status(401).body("Invalid credentials");
         }
@@ -128,7 +128,7 @@ public class AdminController {
         String newAccessToken = jwtUtil.generateAccessToken(email);
 
         // Return it to the client
-        return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken));
+        return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,));
     }
 
 

@@ -31,14 +31,16 @@ public class JwtUtil {
     }
 
     // Generate Refresh Token
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(String email, String name) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(email)
+                .claim("name", name) // <-- add this line
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
+
 
     // Validate Token
     public boolean validateToken(String token) {
