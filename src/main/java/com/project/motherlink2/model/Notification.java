@@ -20,5 +20,10 @@ public class Notification {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @OneToOne
+    @JoinColumn(name = "appointment_id")
+    private Appointments appointment;
+
+
 
 }
