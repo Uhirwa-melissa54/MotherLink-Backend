@@ -5,7 +5,9 @@ import com.project.motherlink2.Dtos.CHWDto;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.service.AuthService;
 import com.project.motherlink2.service.CHWService;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/healthworkers")
 @CrossOrigin(origins = "*")
+@AllArgsConstructor
 public class CHWController {
 
     private final CHWService chwService;
     private final AuthService authService;
 
-    public CHWController(CHWService chwService) {
-        this.chwService = chwService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<String> createCHW(@RequestBody CHW chw) {
