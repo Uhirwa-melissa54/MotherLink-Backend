@@ -20,7 +20,7 @@ public class NotificationService {
         notificationRepository.save(n);
     }
 
-    public List<Notification> getAllNotifications() {
-        return notificationRepository.findAll();
+    public List<Notification> getAllNotifications(String sector) {
+        return notificationRepository.findByMotherSectorOrderByCreatedAtDesc(sector);
     }
 }

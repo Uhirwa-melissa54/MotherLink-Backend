@@ -129,8 +129,9 @@ public class MobileHealthWorker {
 
 
     @GetMapping("notifications/all")
-    public ResponseEntity<?> getAllNotifications() {
-        return ResponseEntity.ok(notificationService.getAllNotifications());
+    public ResponseEntity<?> getAllNotifications(HttpServletRequest request) {
+        String sector=authService.getUserSector(request);
+        return ResponseEntity.ok(notificationService.getAllNotifications(sector));
     }
 
     @GetMapping("/appointments/upcoming")
