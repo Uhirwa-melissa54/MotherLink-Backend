@@ -54,6 +54,10 @@ public class MotherService {
     return motherRepository.findByDistrictAndSector(district,sector);
     }
 
+    public List<Mother> getAllMotherUnspecified(){
+        return motherRepository.findAll();
+    }
+
     public Optional<Mother> getMotherById(Long id) {
         return motherRepository.findById(id);
     }
