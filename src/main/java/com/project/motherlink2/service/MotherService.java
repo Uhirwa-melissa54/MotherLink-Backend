@@ -50,9 +50,8 @@ public class MotherService {
 
 
 
-    public List<Mother> getAllMothers() {
-
-        return motherRepository.findAll();
+    public List<Mother> getAllMothers(String district, String sector) {
+    return motherRepository.findByDistrictAndSector(district,sector);
     }
 
     public Optional<Mother> getMotherById(Long id) {
