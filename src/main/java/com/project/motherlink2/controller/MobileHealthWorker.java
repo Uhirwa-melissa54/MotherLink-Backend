@@ -81,8 +81,10 @@ public class MobileHealthWorker {
     }
 
     @GetMapping("/allMothers")
-    public ResponseEntity<?> getAllMothers() {
-        List<Mother> motherList = motherService.getAllMothers(); // returns List<Mother>
+    public ResponseEntity<?> getAllMothers(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        List<Mother> motherList = motherService.getAllMothers(district,sector); // returns List<Mother>
 
         List<MotherDto> motherDtos = motherList.stream()
                 .map(mother -> new MotherDto(
@@ -102,7 +104,8 @@ public class MobileHealthWorker {
     @GetMapping("/totalMothers")
     public ResponseEntity<AmbulanceDto> getTotalMothers(HttpServletRequest request) {
         String district=authService.getUserDistrict(request);
-        return ResponseEntity.ok(new AmbulanceDto(motherService.getTotalMothers()));
+        String sector=authService.getUserSector(request);
+        return ResponseEntity.ok(new AmbulanceDto(motherService.getTotalMothers(district,sector)));
 
     }
 
