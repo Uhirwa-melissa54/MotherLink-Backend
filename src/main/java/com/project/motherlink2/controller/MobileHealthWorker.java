@@ -134,6 +134,13 @@ public class MobileHealthWorker {
         return ResponseEntity.ok(notificationService.getAllNotifications(sector));
     }
 
+    @GetMapping("notifications/today")
+    public ResponseEntity<?> getAllNotificationsTodays(HttpServletRequest request) {
+        String sector=authService.getUserSector(request);
+        return ResponseEntity.ok(notificationService.todaysAppointements(sector));
+    }
+
+
     @GetMapping("/appointments/upcoming")
     public ResponseEntity<List<AppointementDto>> getUpcomingAppointments() {
         List<AppointementDto> upcomingDtos = appointmentService.getUpcomingAppointments()
