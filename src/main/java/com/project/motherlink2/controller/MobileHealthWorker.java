@@ -10,6 +10,8 @@ import com.project.motherlink2.model.Mother;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import com.project.motherlink2.model.Notification;
+import com.project.motherlink2.repository.NotificationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,7 @@ public class MobileHealthWorker {
     private final MotherService motherService;
     private final NotificationService notificationService;
     private final AppointmentService appointmentService;
+    private final NotificationRepository notificationRepository;
     private final AuthService authService;
 
     @PostMapping("/register")
@@ -128,10 +131,13 @@ public class MobileHealthWorker {
     }
 
 
-    @GetMapping("notifications/all")
-    public ResponseEntity<?> getAllNotifications(HttpServletRequest request) {
-        String sector=authService.getUserSector(request);
-        return ResponseEntity.ok(notificationService.getAllNotifications(sector));
+    public List<NotificationDto> getAllNotifications(String sector) {
+        List<Notification> notifications = notificationRepository.findByMotherSectorOrderByCreatedAtDesc(sector);
+
+        // Map each Notification to NotificationDto
+        return notifications.stream()
+                .map(n -> new NotificationDto(n.getMessage(), n.getCreatedAt()))
+                .toList(); // Java 16+, or use .collect(Collectors.toList())
     }
 
     @GetMapping("notifications/today")
