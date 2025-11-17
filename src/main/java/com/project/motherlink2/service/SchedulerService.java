@@ -25,7 +25,7 @@ public class SchedulerService {
 
     @Scheduled(cron = "0 0 0 * * *")
     public void createAppointmentsAndNotify() {
-        List<Mother> mothers = motherService.getAllMothers();
+        List<Mother> mothers = motherService.getAllMotherUnspecified();
 
         for (Mother mother : mothers) {
 
@@ -55,7 +55,7 @@ public class SchedulerService {
 
     @Scheduled(cron = "0 0 0 * * MON")
     public void updatePregnancyProgressWeekly() {
-        List<Mother> mothers = motherService.getAllMothers();
+        List<Mother> mothers = motherService.getAllMotherUnspecified();
         for (Mother mother : mothers) {
             mother.setPregnancyDays(mother.getPregnancyDays() + 7);
 
