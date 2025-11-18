@@ -203,6 +203,16 @@ public class AdminController {
 
     }
 
+    @GetMapping("mothers/appointments/numberPnc")
+    public ResponseEntity<AmbulanceDto> getNumberPncMothers(HttpServletRequest request) {
+        String district = authService.getUserDistrict(request);
+        String sector = authService.getUserSector(request);
+        long totalAnc= appointmentService.getTotalNumberOfAnc(district,sector);
+
+        return ResponseEntity.ok(new AmbulanceDto(totalAnc));
+
+    }
+
 
  
 
