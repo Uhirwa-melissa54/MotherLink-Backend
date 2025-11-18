@@ -27,7 +27,7 @@ public class CHW {
     @Column(nullable = false)
     private String gender;
 
-    @Column(unique = true)
+
     private String email;
 
     @Column(name = "national_id", unique = true)
