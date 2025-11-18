@@ -35,6 +35,8 @@ public class CHW {
 
     private String cell;
     private String village;
+    private String Sector;
+    private String District;
 
     @Column(name = "phone_number")
     private String phoneNumber;
