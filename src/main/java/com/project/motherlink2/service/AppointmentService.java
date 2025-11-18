@@ -32,6 +32,13 @@ public class AppointmentService {
                         && a.getAppointmentDate().equals(date));
     }
     public List<Appointments> getUpcomingAppointments() {
+
         return appointmentRepository.findByStatus("Upcoming");
     }
+
+    public List<Appointments> getAncAppointments(String district, String sector) {
+
+        return appointmentRepository.findByDistrictAndSectorAndType(district, sector, "ANC");
+    }
+
 }
