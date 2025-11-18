@@ -41,4 +41,9 @@ public class AppointmentService {
         return appointmentRepository.findByDistrictAndSectorAndType(district, sector, "ANC");
     }
 
+    public List<Appointments> getPncAppointments(String district, String sector) {
+
+        return appointmentRepository.findByDistrictAndSectorAndType(district, sector, "PNC");
+    }
+
 }
