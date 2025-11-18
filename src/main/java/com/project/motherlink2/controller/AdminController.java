@@ -193,6 +193,16 @@ public class AdminController {
         return ResponseEntity.ok(appointementDtos);
     }
 
+    @GetMapping("mothers/appointments/numberAnc")
+    public ResponseEntity<AmbulanceDto> getNumberAncMothers(HttpServletRequest request) {
+        String district = authService.getUserDistrict(request);
+        String sector = authService.getUserSector(request);
+        long totalAnc= appointmentService.getTotalNumberOfAnc(district,sector);
+
+        return ResponseEntity.ok(new AmbulanceDto(totalAnc));
+
+    }
+
 
  
 
