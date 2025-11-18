@@ -137,7 +137,7 @@ public class AdminController {
         return ResponseEntity.ok(new LoginResponseDto(true, "Access token refreshed successfully", newAccessToken,name));
     }
 
-
+    @PutMapping("/activate/{id}")
     public ResponseEntity<?> activateCHW(@PathVariable Long id) {
         boolean success = chwService.activateCHW(id);
         if (success) {
@@ -145,6 +145,8 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
+
+    
 
  
 

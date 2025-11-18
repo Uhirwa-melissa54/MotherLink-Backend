@@ -57,6 +57,10 @@ public class MotherService {
     public List<Mother> getMothersWithChildren() {
         return motherRepository.findByStatus("With Child");
     }
+    public long getTotalChildren(String district, String sector) {
+        return motherRepository.countByDistrictAndSectorAndStatus(district, sector, "With Child");
+
+    }
 
     public List<Mother> getAllMotherUnspecified(){
         return motherRepository.findAll();
