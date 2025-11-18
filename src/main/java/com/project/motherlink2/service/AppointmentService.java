@@ -39,19 +39,19 @@ public class AppointmentService {
 
     public List<Appointments> getAncAppointments(String district, String sector) {
 
-        return appointmentRepository.findByDistrictAndSectorAndType(district, sector, "ANC");
+        return appointmentRepository.findByMother_DistrictAndMother_SectorAndType(district, sector, "ANC");
     }
 
     public List<Appointments> getPncAppointments(String district, String sector) {
 
-        return appointmentRepository.findByDistrictAndSectorAndType(district, sector, "PNC");
+        return appointmentRepository.findByMother_DistrictAndMother_SectorAndType(district, sector, "PNC");
     }
 
     public long getTotalNumberOfAnc(String district, String sector) {
-        return appointmentRepository.countByDistrictAndSectorAndType(district, sector, "ANC");
+        return appointmentRepository.countByMother_DistrictAndMother_SectorAndType(district, sector, "ANC");
     }
     public long getTotalNumberOfPnc(String district, String sector) {
-        return appointmentRepository.countByDistrictAndSectorAndType(district, sector, "PNC");
+        return appointmentRepository.countByMother_DistrictAndMother_SectorAndType(district, sector, "PNC");
     }
 
 }

@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface AppointmentsRepository extends JpaRepository<Appointments, Long> {
     List<Appointments> findByStatus(String status);
-    List<Appointments> findByDistrictAndSectorAndType(String district, String sector, String type);
-    long countByDistrictAndSectorAndType(String district, String sector, String type);
+    List<Appointments> findByMother_DistrictAndMother_SectorAndType(String district, String sector, String type);
+    long countByMother_DistrictAndMother_SectorAndType(String district, String sector, String type);
 
 
 }
