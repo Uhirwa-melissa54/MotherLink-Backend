@@ -13,4 +13,6 @@ public interface MotherRepository extends JpaRepository<Mother, Long> {
 
     List<Mother> findByStatus(String status);
 
+
+
 }
