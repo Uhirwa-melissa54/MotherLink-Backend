@@ -2,6 +2,7 @@ package com.project.motherlink2.service;
 
 import com.project.motherlink2.model.Appointments;
 import com.project.motherlink2.model.Mother;
+import com.project.motherlink2.Dtos.AppointementDto;
 import com.project.motherlink2.repository.AppointmentsRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

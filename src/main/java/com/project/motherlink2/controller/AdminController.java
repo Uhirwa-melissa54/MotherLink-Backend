@@ -1,11 +1,9 @@
 package com.project.motherlink2.controller;
 
-import com.project.motherlink2.Dtos.AmbulanceDto;
-import com.project.motherlink2.Dtos.LoginDto;
-import com.project.motherlink2.Dtos.LoginResponseDto;
-import com.project.motherlink2.Dtos.RegisterResponseDto;
+import com.project.motherlink2.Dtos.*;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.config.JwtUtil;
+import com.project.motherlink2.model.Appointments;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.service.*;
 
@@ -17,7 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -29,6 +30,7 @@ public class AdminController {
     private final JwtUtil jwtUtil;
     private final MotherService motherService;
     private final AuthService authService;
+    private final AppointmentService  appointmentService;
 
 
     private final CHWService chwService;
@@ -162,6 +164,20 @@ public class AdminController {
         long mothers = motherService.getPregnantMothers(district,sector);
         return ResponseEntity.ok(new AmbulanceDto(mothers));
 }
+
+    @GetMapping("mothers/appointments/anc")
+    public ResponseEntity<List<AppointementDto>> getAncMothers(HttpServletRequest request) {
+        String district = authService.getUserDistrict(request);
+        String sector = authService.getUserSector(request);
+
+        List<Appointments> appointments = appointmentService.getAncAppointments(district, sector);
+
+        List<AppointementDto> appointementDtos = appointments.stream()
+                .map(n -> new AppointementDto(n.getStatus(), n.getMother().getNames()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(appointementDtos);
+    }
 
 
  
