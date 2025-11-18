@@ -207,7 +207,7 @@ public class AdminController {
     public ResponseEntity<AmbulanceDto> getNumberPncMothers(HttpServletRequest request) {
         String district = authService.getUserDistrict(request);
         String sector = authService.getUserSector(request);
-        long totalAnc= appointmentService.getTotalNumberOfAnc(district,sector);
+        long totalAnc= appointmentService.getTotalNumberOfPnc(district,sector);
 
         return ResponseEntity.ok(new AmbulanceDto(totalAnc));
 

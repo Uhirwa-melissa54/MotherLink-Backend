@@ -50,5 +50,8 @@ public class AppointmentService {
     public long getTotalNumberOfAnc(String district, String sector) {
         return appointmentRepository.countByDistrictAndSectorAndType(district, sector, "ANC");
     }
+    public long getTotalNumberOfPnc(String district, String sector) {
+        return appointmentRepository.countByDistrictAndSectorAndType(district, sector, "PNC");
+    }
 
 }

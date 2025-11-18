@@ -10,4 +10,5 @@ public interface AppointmentsRepository extends JpaRepository<Appointments, Long
     List<Appointments> findByDistrictAndSectorAndType(String district, String sector, String type);
     long countByDistrictAndSectorAndType(String district, String sector, String type);
 
+
 }
