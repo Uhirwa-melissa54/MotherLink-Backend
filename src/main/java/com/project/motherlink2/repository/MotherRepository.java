@@ -11,4 +11,6 @@ public interface MotherRepository extends JpaRepository<Mother, Long> {
 
     long countByDistrictAndSector(String district, String sector);
 
+    List<Mother> findByStatus(String status);
+
 }
