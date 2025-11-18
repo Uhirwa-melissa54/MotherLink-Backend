@@ -46,4 +46,6 @@ public class Mother {
     private String healthCenter;
 
     private String insurance;
+
+    private Integer childrenAgeDays;
 }
