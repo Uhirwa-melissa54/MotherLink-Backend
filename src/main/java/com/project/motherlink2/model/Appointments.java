@@ -22,6 +22,7 @@ public class Appointments {
 
     private LocalDate appointmentDate;
     private String status = "Normal";
+    private String type;
 
 
 }
