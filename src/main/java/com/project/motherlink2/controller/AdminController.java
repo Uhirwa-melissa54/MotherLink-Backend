@@ -179,6 +179,20 @@ public class AdminController {
         return ResponseEntity.ok(appointementDtos);
     }
 
+    @GetMapping("mothers/appointments/pnc")
+    public ResponseEntity<List<AppointementDto>> getPncMothers(HttpServletRequest request) {
+        String district = authService.getUserDistrict(request);
+        String sector = authService.getUserSector(request);
+
+        List<Appointments> appointments = appointmentService.getPncAppointments(district, sector);
+
+        List<AppointementDto> appointementDtos = appointments.stream()
+                .map(n -> new AppointementDto(n.getStatus(), n.getMother().getNames()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(appointementDtos);
+    }
+
 
  
 
