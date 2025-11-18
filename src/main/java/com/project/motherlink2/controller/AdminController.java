@@ -1,17 +1,16 @@
 package com.project.motherlink2.controller;
 
+import com.project.motherlink2.Dtos.AmbulanceDto;
 import com.project.motherlink2.Dtos.LoginDto;
 import com.project.motherlink2.Dtos.LoginResponseDto;
 import com.project.motherlink2.Dtos.RegisterResponseDto;
 import com.project.motherlink2.model.Admin;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.CHW;
-import com.project.motherlink2.service.AuthService;
-import com.project.motherlink2.service.CHWService;
-import com.project.motherlink2.service.AdminService;
+import com.project.motherlink2.service.*;
 
-import com.project.motherlink2.service.NotificationService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +27,8 @@ public class AdminController {
     private final NotificationService notificationService;
     private final AdminService adminService;
     private final JwtUtil jwtUtil;
+    private final MotherService motherService;
+    private final AuthService authService;
 
 
     private final CHWService chwService;
@@ -145,8 +146,15 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
+@GetMapping("/mothers/children")
+    public ResponseEntity<AmbulanceDto> getCHWChildren(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        long children= motherService.getTotalChildren(district,sector);
+        return ResponseEntity.ok(new AmbulanceDto(children));
 
-    
+}
+
 
  
 
