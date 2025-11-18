@@ -2,6 +2,7 @@ package com.project.motherlink2.controller;
 
 import com.project.motherlink2.model.Organization;
 import com.project.motherlink2.service.OrganizationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -22,8 +23,16 @@ public class OrganizationController {
         return organizationService.getOrganizations();
  }
     @PostMapping("/create")
-    public Organization createOrganization(@RequestBody Organization organization) {
-        return organizationService.saveOrganization(organization);
+    public ResponseEntity<String> createOrganization(@RequestBody Organization organization) {
+        try {
+            organizationService.saveOrganization(organization);
+            return ResponseEntity.ok("Organization created");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+
     }
 //    @GetMapping("/{/id}")
 //
