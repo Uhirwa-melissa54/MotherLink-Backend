@@ -155,6 +155,14 @@ public class AdminController {
 
 }
 
+@GetMapping("mothers/pregnantMothers")
+    public ResponseEntity<AmbulanceDto> getPregnantMothers(HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
+        long mothers = motherService.getPregnantMothers(district,sector);
+        return ResponseEntity.ok(new AmbulanceDto(mothers));
+}
+
 
  
 
