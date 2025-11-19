@@ -60,11 +60,11 @@ public class AdminController {
             String accessToken = jwtUtil.generateAccessToken(savedAdmin.getEmail(),savedAdmin.getOrganization().getDistrict(),savedAdmin.getOrganization().getSector());
             String refreshToken = jwtUtil.generateRefreshToken(savedAdmin.getEmail(), savedAdmin.getFullName(),savedAdmin.getOrganization().getDistrict(),savedAdmin.getOrganization().getSector());
             addRefreshTokenToCookie(response, refreshToken);
-            return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
+            return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken,savedAdmin.getFullName()));
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new RegisterResponseDto(false, "Registration failed", null));
+                .body(new RegisterResponseDto(false, "Registration failed", null,"No name"));
     }
 
     @PostMapping("/login")
