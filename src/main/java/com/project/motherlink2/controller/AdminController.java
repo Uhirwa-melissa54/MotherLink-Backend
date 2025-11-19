@@ -105,14 +105,17 @@ public class AdminController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
-    @PutMapping("/update/chw")
-    public ResponseEntity<?> updateCHW(@PathVariable Long id, CHW updatedCHW) {
-        boolean success = chwService.updateCHW(id,updatedCHW);
+
+    @PutMapping("/update/chw/{id}")
+    public ResponseEntity<?> updateCHW(@PathVariable Long id, @RequestBody CHW updatedCHW) {
+        boolean success = chwService.updateCHW(id, updatedCHW);
+
         if (success) {
             return ResponseEntity.ok("CHW updated successfully");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CHW not found");
     }
+
 
 
     @PostMapping("/token/refresh")
