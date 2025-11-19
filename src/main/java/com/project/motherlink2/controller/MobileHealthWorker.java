@@ -42,11 +42,11 @@ public class MobileHealthWorker {
             String accessToken = jwtUtil.generateAccessToken(savedCHW.getEmail(), savedCHW.getCell(), savedCHW.getVillage());
             String refreshToken = jwtUtil.generateRefreshToken(savedCHW.getEmail(), savedCHW.getFullName(), savedCHW.getCell(),  savedCHW.getVillage());
             addRefreshTokenToCookie(response, refreshToken);
-            return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken));
+            return ResponseEntity.ok(new RegisterResponseDto(true, "Registered successfull", accessToken,savedCHW.getFullName()));
 
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new RegisterResponseDto(false, "Registration failed", null));
+                .body(new RegisterResponseDto(false, "Registration failed", null,"No name"));
 
     }
     private void addRefreshTokenToCookie(HttpServletResponse response, String refreshToken) {
