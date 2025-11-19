@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/healthworkers")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5174git ")
 @AllArgsConstructor
 public class CHWController {
 
