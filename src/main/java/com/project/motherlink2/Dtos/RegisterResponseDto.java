@@ -14,6 +14,7 @@ public class RegisterResponseDto {
     private boolean success;
     private String message;
     private String  accessToken;
+    private String  name;
 
 
 
