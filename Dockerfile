@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copy the jar file into the container
 COPY target/MotherLink2-0.0.1-SNAPSHOT.jar app.jar
+COPY .env .env
 
 # Expose the port your app uses
 EXPOSE 8080
