@@ -3,7 +3,6 @@ package com.project.motherlink2.controller;
 import com.project.motherlink2.Dtos.*;
 import com.project.motherlink2.config.JwtUtil;
 import com.project.motherlink2.model.Appointments;
-import com.project.motherlink2.Dtos.AppointementDto;
 import com.project.motherlink2.service.*;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.model.Mother;
@@ -13,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.project.motherlink2.model.Notification;
 import com.project.motherlink2.repository.NotificationRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/mobile/healthworkers")
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "http://localhost:8081",
+    "exp://10.12.72.167:8081"
+})
 @AllArgsConstructor
 public class MobileHealthWorker {
     private final CHWService chwService;

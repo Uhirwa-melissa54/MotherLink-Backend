@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -42,14 +43,20 @@ public class CHW {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "date_joined", nullable = false)
+    @Column(name = "date_joined" , nullable = false)
     private LocalDate dateJoined;
 
-    @Column(name="status",nullable = false)
+    @Column(name="status", nullable = false)
     private String status;
 
     @Column(name="password",nullable = false)
     private String password;
+
+        @PrePersist
+    public void onCreate() {
+        this.status = "active";               // default status
+        this.dateJoined = LocalDate.now(); // set date automatically
+    }
 
 
 
