@@ -26,6 +26,14 @@ public class AmbulanceController {
                 .status(HttpStatus.OK)
                 .body(new AmbulanceDto(totalAmbulance)); // <- use 'new' to create DTO
     }
+
+     @GetMapping("/totalAmbulance1")
+    public ResponseEntity<?> getTotalAmbulance1() {
+        long totalAmbulance = ambulanceService.getTotalAmbulance();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new AmbulanceDto(totalAmbulance)); // <- use 'new' to create DTO
+    }
     @GetMapping("/availableAmbulance")
     public ResponseEntity<?> getAvailableAmbulance() {
         long totalAmbulance = ambulanceService.getAvailable();
