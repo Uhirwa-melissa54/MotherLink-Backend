@@ -81,9 +81,11 @@ public class MobileHealthWorker {
 
     }
     @PostMapping("/createMother")
-    public ResponseEntity<String> createMother(@RequestBody Mother mother) {
+    public ResponseEntity<String> createMother(@RequestBody Mother mother,HttpServletRequest request) {
+        String district=authService.getUserDistrict(request);
+        String sector=authService.getUserSector(request);
         Mother savedMother = motherService.saveMother(mother);
-        Long total=motherService.getTotalMothers();
+        Long total=motherService.getTotalMothers(district, sector);
         return ResponseEntity.ok("Mother created successfully");
     }
 
