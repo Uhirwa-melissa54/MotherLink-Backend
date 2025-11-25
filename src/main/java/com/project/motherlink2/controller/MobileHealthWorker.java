@@ -87,6 +87,7 @@ public class MobileHealthWorker {
         String sector=authService.getUserSector(request);
         Mother savedMother = motherService.saveMother(mother);
         Long total=motherService.getTotalMothers(district, sector);
+
         updaterService.sendUpdate("total-mothers", total);
         return ResponseEntity.ok("Mother created successfully");
     }
