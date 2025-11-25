@@ -14,6 +14,7 @@ import java.util.List;
 public class SchedulerService {
 
     private final MotherService motherService;
+    private final UpdaterService updaterService;
     private final AppointmentService appointmentService;
     private final NotificationService notificationService;
 
@@ -32,6 +33,9 @@ public class SchedulerService {
                     mother.setPregnancyDays(null);
                     mother.setPregnancyMonths(null);
                     mother.setChildrenAgeDays(0);
+                    Long totalChildren = motherService.getTotalChildren(mother.getDistrict(), mother.getSector());
+                    updaterService.sendUpdate("total-children", totalChildren);
+
                 } else if (mother.getPregnancyDays() >= 180) {
                     mother.setStatus("Third Trimester");
                 } else if (mother.getPregnancyDays() >= 90) {
