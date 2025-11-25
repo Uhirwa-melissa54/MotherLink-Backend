@@ -34,6 +34,7 @@ public class MobileHealthWorker {
     private final JwtUtil jwtUtil;
     private final MotherService motherService;
     private final NotificationService notificationService;
+    private final UpdaterService updaterService;
     private final AppointmentService appointmentService;
     private final NotificationRepository notificationRepository;
     private final AuthService authService;
@@ -86,6 +87,7 @@ public class MobileHealthWorker {
         String sector=authService.getUserSector(request);
         Mother savedMother = motherService.saveMother(mother);
         Long total=motherService.getTotalMothers(district, sector);
+        updaterService.sendUpdate("total-mothers", total);
         return ResponseEntity.ok("Mother created successfully");
     }
 
