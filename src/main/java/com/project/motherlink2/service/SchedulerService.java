@@ -34,7 +34,7 @@ public class SchedulerService {
                     mother.setPregnancyMonths(null);
                     mother.setChildrenAgeDays(0);
                     Long totalChildren = motherService.getTotalChildren(mother.getDistrict(), mother.getSector());
-                    updaterService.sendUpdate("total-children", totalChildren);
+                    updaterService.sendUpdate("total-children/" + mother.getDistrict() + "/" + mother.getSector(), totalChildren);
 
                 } else if (mother.getPregnancyDays() >= 180) {
                     mother.setStatus("Third Trimester");
