@@ -53,7 +53,8 @@ public class SchedulerService {
                             Appointments appointment = new Appointments();
                             appointment.setMother(mother);
                             appointment.setAppointmentDate(LocalDate.now().plusDays(7));
-                            appointment.setStatus("ANC"); // For mother
+                            appointment.setStatus("ANC");// For mother
+                            
                             appointmentService.save(appointment);
 
                             String message = "ANC appointment for mother " + mother.getNames() +
