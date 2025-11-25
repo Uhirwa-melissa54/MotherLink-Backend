@@ -1,4 +1,4 @@
-package com.project.motherlink2.config.WebConfig;
+package com.project.motherlink2.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -19,7 +19,7 @@ public class WebConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/updates");
         config.setApplicationDestinationPrefixes("/app");
     }
 }

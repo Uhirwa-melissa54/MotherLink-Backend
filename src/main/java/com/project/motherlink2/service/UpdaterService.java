@@ -10,6 +10,6 @@ public class UpdaterService {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void sendUpdate(String topic, Object payload) {
-        messagingTemplate.convertAndSend("/topic/" + topic, payload);
+        messagingTemplate.convertAndSend("/updates/" + topic, payload);
     }
 }
