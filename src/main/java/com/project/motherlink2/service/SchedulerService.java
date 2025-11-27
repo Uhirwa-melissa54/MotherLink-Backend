@@ -2,6 +2,7 @@ package com.project.motherlink2.service;
 
 import com.project.motherlink2.model.Appointments;
 import com.project.motherlink2.model.Mother;
+import com.project.motherlink2.model.Notification;
 import lombok.AllArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -53,13 +54,16 @@ public class SchedulerService {
                             Appointments appointment = new Appointments();
                             appointment.setMother(mother);
                             appointment.setAppointmentDate(LocalDate.now().plusDays(7));
-                            appointment.setStatus("ANC");// For mother
-                            
+                            appointment.setStatus("ANC");
                             appointmentService.save(appointment);
 
                             String message = "ANC appointment for mother " + mother.getNames() +
                                     " is scheduled in 7 days.";
                             notificationService.sendNotification(message);
+                            List<Notification> notifications= notificationService.todaysAppointements(mother.getSector());
+
+                            updaterService.sendUpdate("notifcations/" + mother.getDistrict() + "/" + mother.getSector(), notifications);
+
                         }
                     }
                 }
