@@ -137,11 +137,27 @@ public class MobileHealthWorker {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateMother(@PathVariable Long id, @RequestBody Mother request) {
+    public ResponseEntity<?> updateMother(@PathVariable Long id, @RequestBody Mother request,HttpServletRequest request1) {
+        String district=authService.getUserDistrict(request1);
+        String sector=authService.getUserSector(request1);
+
         boolean success = motherService.updateMother(id, request);
         if (success) {
+            List<Mother> motherList = motherService.getAllMothers(district,sector);
+            List<MotherDto> motherDtos = motherList.stream()
+                    .map(mother -> new MotherDto(
+                            mother.getId(),
+                            mother.getNames(),       // maps to motherName in DTO
+                            Long.parseLong(mother.getNationalId()), // convert if needed
+                            mother.getCell(),
+                            mother.getInsurance(),
+                            mother.getStatus()
+                    ))
+                    .toList();
+            updaterService.sendUpdate("All/mothers", motherDtos);
             return ResponseEntity.ok("Mother updated successfully");
         }
+
         return ResponseEntity.status(404).body("Mother not found");
     }
 
@@ -161,7 +177,7 @@ public class MobileHealthWorker {
         // Map each Notification to NotificationDto
         return notifications.stream()
                 .map(n -> new NotificationDto(n.getMessage(), n.getCreatedAt()))
-                .toList(); // Java 16+, or use .collect(Collectors.toList())
+                .toList();
     }
 
     @GetMapping("notifications/today")
