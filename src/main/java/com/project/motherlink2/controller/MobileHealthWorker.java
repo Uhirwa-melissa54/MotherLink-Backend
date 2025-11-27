@@ -2,7 +2,6 @@ package com.project.motherlink2.controller;
 
 import com.project.motherlink2.Dtos.*;
 import com.project.motherlink2.config.JwtUtil;
-import com.project.motherlink2.model.Appointments;
 import com.project.motherlink2.service.*;
 import com.project.motherlink2.model.CHW;
 import com.project.motherlink2.model.Mother;
@@ -162,10 +161,27 @@ public class MobileHealthWorker {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteMother(@PathVariable Long id) {
+    public ResponseEntity<?> deleteMother(@PathVariable Long id,HttpServletRequest request1) {
+        String district=authService.getUserDistrict(request1);
+        String sector=authService.getUserSector(request1);
         boolean success = motherService.deleteMother(id);
         if (success) {
+            Long total=motherService.getTotalMothers(district, sector);
+            updaterService.sendUpdate("total-mothers", total);
+            List<Mother> motherList = motherService.getAllMothers(district,sector);
+            List<MotherDto> motherDtos = motherList.stream()
+                    .map(mother -> new MotherDto(
+                            mother.getId(),
+                            mother.getNames(),       // maps to motherName in DTO
+                            Long.parseLong(mother.getNationalId()), // convert if needed
+                            mother.getCell(),
+                            mother.getInsurance(),
+                            mother.getStatus()
+                    ))
+                    .toList();
+            updaterService.sendUpdate("All/mothers", motherDtos);
             return ResponseEntity.ok("Mother deleted successfully");
+
         }
         return ResponseEntity.status(404).body("Mother not found");
     }
