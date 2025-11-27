@@ -89,7 +89,22 @@ public class MobileHealthWorker {
         Long total=motherService.getTotalMothers(district, sector);
 
         updaterService.sendUpdate("total-mothers", total);
+
+        List<Mother> motherList = motherService.getAllMothers(district,sector); // returns List<Mother>
+
+        List<MotherDto> motherDtos = motherList.stream()
+                .map(mother1 -> new MotherDto(
+                        mother1.getId(),
+                        mother1.getNames(),       // maps to motherName in DTO
+                        Long.parseLong(mother1.getNationalId()), // convert if needed
+                        mother1.getCell(),
+                        mother1.getInsurance(),
+                        mother1.getStatus()
+                ))
+                .toList();
+        updaterService.sendUpdate("All/mothers", motherDtos);
         return ResponseEntity.ok("Mother created successfully");
+
     }
 
     @GetMapping("/allMothers")

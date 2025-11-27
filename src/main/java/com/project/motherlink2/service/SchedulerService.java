@@ -62,7 +62,7 @@ public class SchedulerService {
                             notificationService.sendNotification(message);
                             List<Notification> notifications= notificationService.todaysAppointements(mother.getSector());
 
-                            updaterService.sendUpdate("notifcations/" + mother.getDistrict() + "/" + mother.getSector(), notifications);
+                            updaterService.sendUpdate("notifications/" + mother.getDistrict() + "/" + mother.getSector(), notifications);
 
                         }
                     }
