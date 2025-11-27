@@ -189,8 +189,6 @@ public class MobileHealthWorker {
 @GetMapping("notifications/all")
     public List<NotificationDto> getAllNotifications(String sector) {
         List<Notification> notifications = notificationRepository.findByMotherSectorOrderByCreatedAtDesc(sector);
-
-        // Map each Notification to NotificationDto
         return notifications.stream()
                 .map(n -> new NotificationDto(n.getMessage(), n.getCreatedAt()))
                 .toList();
