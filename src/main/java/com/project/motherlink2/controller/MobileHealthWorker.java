@@ -186,7 +186,7 @@ public class MobileHealthWorker {
         return ResponseEntity.status(404).body("Mother not found");
     }
 
-
+@GetMapping("notifications/all")
     public List<NotificationDto> getAllNotifications(String sector) {
         List<Notification> notifications = notificationRepository.findByMotherSectorOrderByCreatedAtDesc(sector);
 
