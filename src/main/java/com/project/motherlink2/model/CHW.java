@@ -46,10 +46,10 @@ public class CHW {
     @Column(name = "date_joined")
     private LocalDate dateJoined;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private String status;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @PrePersist
