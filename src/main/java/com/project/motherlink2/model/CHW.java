@@ -46,24 +46,21 @@ public class CHW {
     @Column(name = "date_joined")
     private LocalDate dateJoined;
 
-    @Column(name="status", nullable = false)
+    @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name="password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-        @PrePersist
-    public void onCreate() {
-            this.status = "active";               // default status
-            this.dateJoined = LocalDate.now();
-
+    @PrePersist
+    public void prePersist() {
+        if (this.status == null) {
+            this.status = "active";  // default status
         }
+        if (this.dateJoined == null) {
+            this.dateJoined = LocalDate.now();  // default to today
+        }
+    }
+}
 
-            @PrePersist
-            public void onCreate1() {
-                if (this.dateJoined == null) {  // Only set if not already set
-                    this.dateJoined = LocalDate.now();
-                }
 
-
-            }}
