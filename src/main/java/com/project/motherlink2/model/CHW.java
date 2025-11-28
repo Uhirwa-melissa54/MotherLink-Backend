@@ -43,7 +43,7 @@ public class CHW {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "date_joined" , nullable = false)
+    @Column(name = "date_joined")
     private LocalDate dateJoined;
 
     @Column(name="status", nullable = false)
@@ -54,13 +54,16 @@ public class CHW {
 
         @PrePersist
     public void onCreate() {
-        this.status = "active";               // default status
-        this.dateJoined = LocalDate.now(); // set date automatically
-    }
+            this.status = "active";               // default status
+            this.dateJoined = LocalDate.now();
+
+        }
+
+            @PrePersist
+            public void onCreate1() {
+                if (this.dateJoined == null) {  // Only set if not already set
+                    this.dateJoined = LocalDate.now();
+                }
 
 
-
-
-
-
-}
+            }}
