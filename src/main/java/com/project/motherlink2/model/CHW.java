@@ -43,11 +43,11 @@ public class CHW {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "date_joined")
-    private LocalDate dateJoined;
+    @Column(name = "date_joined", nullable = true)
+    private LocalDate dateJoined=LocalDate.now();
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "status", nullable = true)
+    private String status="active";
 
     @Column(name = "password")
     private String password;
