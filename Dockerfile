@@ -1,15 +1,17 @@
-# Use official Java runtime
-FROM eclipse-temurin:17-jdk
+# -------- STAGE 1: Build --------
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
 
-# Set working directory inside the container
 WORKDIR /app
 
-# Copy the jar file into the container
-COPY target/MotherLink2-0.0.1-SNAPSHOT.jar app.jar
-COPY .env .env
+RUN mvn clean package -DskipTests
 
-# Expose the port your app uses
+# -------- STAGE 2: Run --------
+FROM eclipse-temurin:17-jdk
+
+WORKDIR /app
+
+COPY --from=builder /app/target/MotherLink2-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8080
 
-# Run the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
