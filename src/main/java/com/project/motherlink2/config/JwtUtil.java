@@ -1,6 +1,8 @@
 package com.project.motherlink2.config;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +11,20 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String secret;
+
+
+    private final Key secretKey;
     private final long accessTokenExpiration;
     private final long refreshTokenExpiration;
 
-    public JwtUtil() {
-        Dotenv dotenv = Dotenv.load();
-        this.secret = dotenv.get("JWT_SECRET");
-        this.accessTokenExpiration = Long.parseLong(dotenv.get("ACCESS_TOKEN_EXPIRATION"));
-        this.refreshTokenExpiration = Long.parseLong(dotenv.get("REFRESH_TOKEN_EXPIRATION"));
+    public JwtUtil(
+            @Value("${JWT_SECRET}") String secret,
+            @Value("${ACCESS_TOKEN_EXPIRATION}") long accessTokenExpiration,
+            @Value("${REFRESH_TOKEN_EXPIRATION}") long refreshTokenExpiration
+    ) {
+        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        this.accessTokenExpiration = accessTokenExpiration;
+        this.refreshTokenExpiration = refreshTokenExpiration;
     }
 
     // Generate Access Token
@@ -28,7 +35,7 @@ public class JwtUtil {
                 .claim("sector", sector)                // add sector claim
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
@@ -42,7 +49,7 @@ public class JwtUtil {
                 .claim("sector", sector)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
@@ -50,7 +57,7 @@ public class JwtUtil {
     // Validate Token
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             return false;
@@ -61,12 +68,12 @@ public class JwtUtil {
 
     // Extract username
     public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public String getName(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
         return claims.get("name", String.class);
@@ -74,7 +81,7 @@ public class JwtUtil {
 
     public String extractDistrict(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
         return claims.get("district", String.class);
@@ -82,7 +89,7 @@ public class JwtUtil {
 
     public String extractSector(String token) {
         Claims claims = Jwts.parser()
-                .setSigningKey(secret)
+                .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
         return claims.get("sector", String.class);
